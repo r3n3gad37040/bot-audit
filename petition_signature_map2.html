@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Petition Signature Origins — Crescent Gardens Cemetery</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: system-ui, sans-serif; background: #0d0f14; color: #e0e0e0; }
+
+  .header {
+    padding: 16px 24px;
+    background: #13161e;
+    border-bottom: 1px solid #2a3045;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .header-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: #fff;
+  }
+
+  .header-sub {
+    font-size: 12px;
+    color: #9ba3b8;
+    margin-top: 2px;
+  }
+
+  .stats {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .stat {
+    background: #1a1d27;
+    border: 0.5px solid #2a3045;
+    border-radius: 6px;
+    padding: 8px 14px;
+    text-align: center;
+  }
+
+  .stat-val {
+    font-size: 18px;
+    font-weight: 700;
+    color: #e84040;
+  }
+
+  .stat-val.green { color: #22c55e; }
+
+  .stat-label {
+    font-size: 10px;
+    color: #6b7490;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-top: 2px;
+  }
+
+  #map {
+    width: 100%;
+    height: calc(100vh - 130px);
+    min-height: 500px;
+  }
+
+  .footer {
+    padding: 10px 24px;
+    background: #13161e;
+    border-top: 1px solid #2a3045;
+    font-size: 11px;
+    color: #6b7490;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .footer span { color: #e84040; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <div class="header-title">Petition Signature Origins — "Support for Crescent Gardens Cemetery"</div>
+    <div class="header-sub">Change.org petition submitted to Riverside County Planning Commission — March 2026</div>
+  </div>
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-val">1,823</div>
+      <div class="stat-label">Total Signatures</div>
+    </div>
+    <div class="stat">
+      <div class="stat-val">69%</div>
+      <div class="stat-label">From Corona CA</div>
+    </div>
+    <div class="stat">
+      <div class="stat-val">~1,258</div>
+      <div class="stat-label">Non-local sigs</div>
+    </div>
+    <div class="stat">
+      <div class="stat-val">30+ mi</div>
+      <div class="stat-label">From project site</div>
+    </div>
+    <div class="stat">
+      <div class="stat-val green">&lt;10 mi</div>
+      <div class="stat-label">Cluster width</div>
+    </div>
+  </div>
+</div>
+
+<div id="map"></div>
+
+<div class="footer">
+  <div>Prepared: March 18, 2026 &nbsp;|&nbsp; Zip code centroids sourced from Google Places API &nbsp;|&nbsp; <span>NOT FOR PUBLIC DISTRIBUTION WITHOUT LEGAL REVIEW</span></div>
+  <div>ZIP distances: 92880↔92882 = 6.77 mi &nbsp;|&nbsp; 92882↔92881 = 4.57 mi &nbsp;|&nbsp; 92880↔92881 = 9.86 mi &nbsp;|&nbsp; All three fit inside a 5-mile radius</div>
+</div>
+
+<script>
+function initMap() {
+  const map = L.map('map').setView([33.88, -117.46], 11);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap contributors',
+    maxZoom: 19
+  }).addTo(map);
+
+  const zipData = [
+    {
+      lat: 33.952463,
+      lng: -117.584802,
+      code: '92880',
+      name: 'Corona / Eastvale',
+      info: '<b>ZIP 92880 — Corona / Eastvale</b><br>Part of the 69% non-local signature cluster.<br>Distance from project site: 30+ miles by road.<br><br>This zip code contributed to the ~1,258 signatures<br>from three adjacent Corona zip codes — representing<br>69% of the petition\'s total signature count.'
+    },
+    {
+      lat: 33.840139,
+      lng: -117.537844,
+      code: '92881',
+      name: 'SE Corona',
+      info: '<b>ZIP 92881 — SE Corona</b><br>Part of the 69% non-local signature cluster.<br>4.57 miles from 92882 centroid.<br>9.86 miles from 92880 centroid.<br><br>All three zip codes fit inside a circle<br>with a radius of under 5 miles.'
+    },
+    {
+      lat: 33.878676,
+      lng: -117.576063,
+      code: '92882',
+      name: 'Central Corona',
+      info: '<b>ZIP 92882 — Central Corona</b><br>Part of the 69% non-local signature cluster.<br>6.77 miles from 92880 centroid.<br>4.57 miles from 92881 centroid.<br><br>Corona City Hall is located within this zip code.'
+    }
+  ];
+
+  zipData.forEach(zip => {
+    // Radius circle — 2.5 miles = 4023 meters
+    L.circle([zip.lat, zip.lng], {
+      radius: 4023,
+      color: '#e84040',
+      weight: 2,
+      opacity: 0.8,
+      fill: true,
+      fillColor: '#e84040',
+      fillOpacity: 0.10,
+      dashArray: '8, 5'
+    }).addTo(map);
+
+    // Center marker
+    const marker = L.circleMarker([zip.lat, zip.lng], {
+      radius: 10,
+      fillColor: '#e84040',
+      color: '#ffffff',
+      weight: 2,
+      opacity: 1,
+      fillOpacity: 1
+    }).addTo(map);
+
+    marker.bindPopup(zip.info, { maxWidth: 300 });
+    marker.on('click', () => marker.openPopup());
+  });
+
+  // Project site marker
+  const projectMarker = L.circleMarker([33.731378, -117.295672], {
+    radius: 10,
+    fillColor: '#1a7a3a',
+    color: '#ffffff',
+    weight: 2,
+    opacity: 1,
+    fillOpacity: 1
+  }).addTo(map);
+
+  projectMarker.bindPopup(
+    '<b>Crescent Gardens Cemetery (Proposed)</b><br>' +
+    'Meadowbrook, unincorporated Riverside County, CA<br><br>' +
+    'This is the actual project site under review by the<br>' +
+    'Riverside County Planning Commission.<br><br>' +
+    '30+ miles by road from the Corona zip code cluster<br>' +
+    'that produced 69% of the petition\'s signatures.<br><br>' +
+    '<b>Population of immediate impact zone: &lt;15,000</b>',
+    { maxWidth: 300 }
+  );
+
+  // Distance line from cluster centroid to project site
+  L.polyline([
+    [33.878676, -117.576063],
+    [33.731378, -117.295672]
+  ], {
+    color: '#888888',
+    weight: 2,
+    opacity: 0.6
+  }).addTo(map);
+
+  // Legend
+  const legend = L.control({ position: 'bottomleft' });
+  legend.onAdd = function(map) {
+    const div = L.DomUtil.create('div', 'legend');
+    div.style.cssText = 'background:rgba(255,255,255,0.95);padding:12px 16px;border-radius:8px;border:1px solid #ccc;font:12px system-ui;line-height:2;box-shadow:0 2px 6px rgba(0,0,0,0.15);';
+    div.innerHTML = `
+      <div style="font-weight:700;font-size:13px;margin-bottom:4px;color:#222;">Petition Signature Origins</div>
+      <div style="display:flex;align-items:center;gap:8px;"><span style="display:inline-block;width:14px;height:14px;background:#e84040;border-radius:50%;border:2px solid white;box-shadow:0 1px 3px rgba(0,0,0,0.3);"></span><span style="color:#333;">ZIP code centroid (92880 / 92881 / 92882)</span></div>
+      <div style="display:flex;align-items:center;gap:8px;"><span style="display:inline-block;width:22px;height:0;border-top:2px dashed #e84040;"></span><span style="color:#333;">~2.5 mile radius per zip</span></div>
+      <div style="display:flex;align-items:center;gap:8px;"><span style="display:inline-block;width:14px;height:14px;background:#1a7a3a;border-radius:50%;border:2px solid white;box-shadow:0 1px 3px rgba(0,0,0,0.3);"></span><span style="color:#333;">Project site — Meadowbrook CA</span></div>
+      <div style="display:flex;align-items:center;gap:8px;"><span style="display:inline-block;width:22px;height:0;border-top:2px dashed #888;"></span><span style="color:#333;">Distance line (30+ mi)</span></div>
+      <div style="color:#888;margin-top:6px;font-size:11px;">Click any marker for details</div>
+    `;
+    return div;
+  };
+  legend.addTo(map);
+}
+
+document.addEventListener('DOMContentLoaded', initMap);
+</script>
+
+</body>
+</html>

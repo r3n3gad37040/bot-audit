@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Petition Signature Growth — March 15–18, 2026</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #0f1117; color: #e0e0e0; font-family: system-ui, sans-serif; padding: 24px; }
+  h1 { font-size: 18px; font-weight: 500; color: #fff; margin-bottom: 6px; }
+  .subtitle { font-size: 13px; color: #888; margin-bottom: 20px; }
+  .legend { display: flex; gap: 24px; margin-bottom: 16px; font-size: 13px; }
+  .legend span { display: flex; align-items: center; gap: 8px; }
+  .swatch { width: 28px; height: 3px; display: inline-block; border-radius: 2px; }
+  .swatch.dashed { background: repeating-linear-gradient(90deg, #06b6d4 0px, #06b6d4 6px, transparent 6px, transparent 10px); }
+  canvas { width: 100%; display: block; }
+  .chart-wrap { position: relative; width: 100%; }
+  .anomaly-note { font-size: 11px; color: #666; margin-top: 10px; }
+  .stats { display: flex; gap: 16px; margin-bottom: 24px; flex-wrap: wrap; }
+  .stat { background: #1a1d27; border: 0.5px solid #2a2d3a; border-radius: 8px; padding: 12px 16px; min-width: 140px; }
+  .stat-label { font-size: 11px; color: #666; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .stat-value { font-size: 22px; font-weight: 500; color: #22c55e; }
+  .stat-value.cyan { color: #06b6d4; }
+  .stat-value.white { color: #fff; }
+  #tooltip {
+    position: absolute; background: #1e2130; border: 0.5px solid #3a3d4a;
+    border-radius: 6px; padding: 8px 12px; font-size: 12px; pointer-events: none;
+    display: none; z-index: 10; min-width: 180px;
+  }
+  #tooltip .tt-label { color: #888; margin-bottom: 4px; font-size: 11px; }
+  #tooltip .tt-green { color: #22c55e; }
+  #tooltip .tt-cyan { color: #06b6d4; }
+  #tooltip .tt-diff { color: #f59e0b; font-size: 11px; margin-top: 4px; }
+</style>
+</head>
+<body>
+
+<h1>Petition Signature Growth — March 15–18, 2026</h1>
+<p class="subtitle">Actual cumulative signatures vs. conservative organic baseline (50 signatures/day max)</p>
+
+<div class="stats">
+  <div class="stat">
+    <div class="stat-label">Current Total</div>
+    <div class="stat-value">1,823</div>
+  </div>
+  <div class="stat">
+    <div class="stat-label">Organic Expected</div>
+    <div class="stat-value cyan" id="organicStat"></div>
+  </div>
+  <div class="stat">
+    <div class="stat-label">Overage Factor</div>
+    <div class="stat-value white" id="overageStat"></div>
+  </div>
+  <div class="stat">
+    <div class="stat-label">Days of Data</div>
+    <div class="stat-value white">3.25</div>
+  </div>
+</div>
+
+<div class="legend">
+  <span><span class="swatch" style="background:#22c55e;"></span> Cumulative signatures</span>
+  <span><span class="swatch dashed"></span> Organic baseline (50/day)</span>
+</div>
+
+<div class="chart-wrap">
+  <canvas id="chart"></canvas>
+  <div id="tooltip">
+    <div class="tt-label" id="tt-time"></div>
+    <div class="tt-green" id="tt-actual"></div>
+    <div class="tt-cyan" id="tt-baseline"></div>
+    <div class="tt-diff" id="tt-diff"></div>
+  </div>
+</div>
+
+<p class="anomaly-note">⚠ Red dot at Mar 16 ~5:00 PM marks anomaly — count dropped 683→678 (possible duplicate removal or correction).</p>
+
+<script>
+const raw = [
+  ["Mar 15 7:31 PM", 18],["Mar 16 4:35 PM", 666],["Mar 16 4:40 PM", 669],
+  ["Mar 16 4:46 PM", 671],["Mar 16 4:52 PM", 683],["Mar 16 5:00 PM", 678],
+  ["Mar 16 5:06 PM", 690],["Mar 16 5:08 PM", 697],["Mar 16 5:21 PM", 698],
+  ["Mar 16 5:26 PM", 700],["Mar 16 5:40 PM", 706],["Mar 16 5:45 PM", 707],
+  ["Mar 16 5:52 PM", 709],["Mar 16 5:57 PM", 710],["Mar 16 6:02 PM", 712],
+  ["Mar 16 6:20 PM", 716],["Mar 16 6:42 PM", 725],["Mar 16 6:45 PM", 727],
+  ["Mar 16 6:59 PM", 731],["Mar 16 7:15 PM", 732],["Mar 16 7:21 PM", 736],
+  ["Mar 16 7:33 PM", 739],["Mar 16 8:28 PM", 752],["Mar 16 9:09 PM", 757],
+  ["Mar 16 9:21 PM", 758],["Mar 16 9:27 PM", 761],["Mar 16 9:40 PM", 765],
+  ["Mar 16 9:56 PM", 768],["Mar 16 10:00 PM", 771],["Mar 16 10:05 PM", 773],
+  ["Mar 16 10:21 PM", 778],["Mar 16 10:25 PM", 780],["Mar 16 11:03 PM", 789],
+  ["Mar 16 11:09 PM", 790],["Mar 17 12:06 AM", 802],["Mar 17 12:17 AM", 803],
+  ["Mar 17 12:36 AM", 804],["Mar 17 12:36 AM", 808],["Mar 17 12:58 AM", 815],
+  ["Mar 17 1:07 AM", 816],["Mar 17 1:27 AM", 824],["Mar 17 1:44 AM", 828],
+  ["Mar 17 1:51 AM", 830],["Mar 17 2:11 AM", 837],["Mar 17 2:27 AM", 839],
+  ["Mar 17 2:28 AM", 841],["Mar 17 2:40 AM", 844],["Mar 17 2:49 AM", 846],
+  ["Mar 17 2:56 AM", 847],["Mar 17 8:31 AM", 893],["Mar 17 10:40 AM", 924],
+  ["Mar 17 10:41 AM", 926],["Mar 17 11:53 AM", 956],["Mar 17 12:27 PM", 978],
+  ["Mar 17 3:23 PM", 1099],["Mar 17 4:28 PM", 1176],["Mar 17 4:34 PM", 1180],
+  ["Mar 17 5:22 PM", 1214],["Mar 17 7:05 PM", 1236],["Mar 17 7:31 PM", 1302],
+  ["Mar 17 8:06 PM", 1313],["Mar 17 8:12 PM", 1315],["Mar 17 8:20 PM", 1317],
+  ["Mar 17 8:37 PM", 1324],["Mar 17 9:07 PM", 1355],["Mar 17 9:23 PM", 1358],
+  ["Mar 17 9:50 PM", 1370],["Mar 17 10:01 PM", 1377],["Mar 17 10:32 PM", 1388],
+  ["Mar 17 10:51 PM", 1405],["Mar 17 11:31 PM", 1423],["Mar 18 12:06 AM", 1485],
+  ["Mar 18 12:24 AM", 1497],["Mar 18 1:01 AM", 1512],["Mar 18 1:19 AM", 1532],
+  ["Mar 18 1:42 AM", 1544],["Mar 18 1:49 AM", 1550],["Mar 18 2:03 AM", 1565],
+  ["Mar 18 2:18 AM", 1567],["Mar 18 8:09 AM", 1634],["Mar 18 8:57 AM", 1643],
+  ["Mar 18 9:08 AM", 1648],["Mar 18 9:41 AM", 1665],["Mar 18 10:02 AM", 1672],
+  ["Mar 18 10:20 AM", 1682],["Mar 18 10:32 AM", 1691],["Mar 18 10:43 AM", 1696],
+  ["Mar 18 11:02 AM", 1706],["Mar 18 11:16 AM", 1714],["Mar 18 11:31 AM", 1725],
+  ["Mar 18 11:49 AM", 1735],["Mar 18 12:06 PM", 1782],["Mar 18 12:43 PM", 1782],
+  ["Mar 18 1:00 PM", 1809],["Mar 18 1:17 PM", 1818],["Mar 18 1:30 PM", 1823]
+];
+
+function parseTS(label) {
+  const parts = label.match(/(\w+)\s(\d+)\s(\d+):(\d+)\s(AM|PM)/);
+  if (!parts) return 0;
+  const day = parseInt(parts[2]);
+  let hr = parseInt(parts[3]), min = parseInt(parts[4]);
+  if (parts[5] === 'PM' && hr !== 12) hr += 12;
+  if (parts[5] === 'AM' && hr === 12) hr = 0;
+  return (day * 24 * 60) + (hr * 60) + min;
+}
+
+const startMin = parseTS(raw[0][0]);
+const labels = raw.map(r => r[0]);
+const cumulative = raw.map(r => r[1]);
+const baseline = raw.map(r => Math.round(18 + 50 * (parseTS(r[0]) - startMin) / (24 * 60)));
+const anomalyIdx = 5;
+
+// Stats
+const lastBaseline = baseline[baseline.length - 1];
+document.getElementById('organicStat').textContent = lastBaseline.toLocaleString();
+document.getElementById('overageStat').textContent = (1823 / lastBaseline).toFixed(1) + 'x';
+
+// Chart
+const canvas = document.getElementById('chart');
+const dpr = window.devicePixelRatio || 1;
+const PAD = { top: 20, right: 40, bottom: 80, left: 70 };
+
+function resize() {
+  const w = canvas.parentElement.clientWidth;
+  const h = Math.min(460, Math.max(300, w * 0.5));
+  canvas.style.width = w + 'px';
+  canvas.style.height = h + 'px';
+  canvas.width = w * dpr;
+  canvas.height = h * dpr;
+  draw();
+}
+
+function draw() {
+  const ctx = canvas.getContext('2d');
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  const W = canvas.width / dpr;
+  const H = canvas.height / dpr;
+  const cW = W - PAD.left - PAD.right;
+  const cH = H - PAD.top - PAD.bottom;
+
+  ctx.clearRect(0, 0, W, H);
+
+  const maxY = 2000;
+  const minY = 0;
+  const n = raw.length;
+
+  function xPos(i) { return PAD.left + (i / (n - 1)) * cW; }
+  function yPos(v) { return PAD.top + cH - ((v - minY) / (maxY - minY)) * cH; }
+
+  // Grid lines
+  ctx.strokeStyle = 'rgba(255,255,255,0.05)';
+  ctx.lineWidth = 1;
+  [0, 250, 500, 750, 1000, 1250, 1500, 1750, 2000].forEach(v => {
+    const y = yPos(v);
+    ctx.beginPath(); ctx.moveTo(PAD.left, y); ctx.lineTo(PAD.left + cW, y); ctx.stroke();
+    ctx.fillStyle = '#555'; ctx.font = '11px system-ui'; ctx.textAlign = 'right';
+    ctx.fillText(v.toLocaleString(), PAD.left - 8, y + 4);
+  });
+
+  // Y axis label
+  ctx.save();
+  ctx.translate(14, PAD.top + cH / 2);
+  ctx.rotate(-Math.PI / 2);
+  ctx.fillStyle = '#666'; ctx.font = '12px system-ui'; ctx.textAlign = 'center';
+  ctx.fillText('Signatures', 0, 0);
+  ctx.restore();
+
+  // X axis ticks — show ~10 labels
+  const step = Math.floor(n / 10);
+  ctx.fillStyle = '#555'; ctx.font = '10px system-ui'; ctx.textAlign = 'center';
+  for (let i = 0; i < n; i += step) {
+    const x = xPos(i);
+    const lbl = labels[i].replace(' 20', '\n').split(' ');
+    ctx.fillText(lbl[0] + ' ' + lbl[1], x, PAD.top + cH + 18);
+    ctx.fillText(lbl[2] + ' ' + lbl[3], x, PAD.top + cH + 30);
+  }
+
+  // Baseline (cyan dashed)
+  ctx.beginPath();
+  ctx.setLineDash([6, 4]);
+  ctx.strokeStyle = '#06b6d4';
+  ctx.lineWidth = 1.5;
+  baseline.forEach((v, i) => {
+    const x = xPos(i), y = yPos(v);
+    i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+  });
+  ctx.stroke();
+  ctx.setLineDash([]);
+
+  // Cumulative (green)
+  ctx.beginPath();
+  ctx.strokeStyle = '#22c55e';
+  ctx.lineWidth = 2.5;
+  cumulative.forEach((v, i) => {
+    const x = xPos(i), y = yPos(v);
+    i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+  });
+  ctx.stroke();
+
+  // Anomaly dot
+  ctx.beginPath();
+  ctx.fillStyle = '#ef4444';
+  ctx.arc(xPos(anomalyIdx), yPos(cumulative[anomalyIdx]), 5, 0, Math.PI * 2);
+  ctx.fill();
+
+  // Hover line (drawn by mousemove, stored globally)
+  if (window._hoverIdx !== undefined && window._hoverIdx >= 0) {
+    const hx = xPos(window._hoverIdx);
+    ctx.beginPath();
+    ctx.strokeStyle = 'rgba(255,255,255,0.15)';
+    ctx.lineWidth = 1;
+    ctx.setLineDash([3, 3]);
+    ctx.moveTo(hx, PAD.top);
+    ctx.lineTo(hx, PAD.top + cH);
+    ctx.stroke();
+    ctx.setLineDash([]);
+  }
+}
+
+resize();
+window.addEventListener('resize', resize);
+
+// Tooltip
+const tooltip = document.getElementById('tooltip');
+canvas.addEventListener('mousemove', e => {
+  const rect = canvas.getBoundingClientRect();
+  const mx = e.clientX - rect.left;
+  const W = canvas.width / dpr;
+  const cW = W - PAD.left - PAD.right;
+  const n = raw.length;
+  const frac = (mx - PAD.left) / cW;
+  const idx = Math.round(frac * (n - 1));
+  if (idx < 0 || idx >= n) { tooltip.style.display = 'none'; window._hoverIdx = undefined; draw(); return; }
+
+  window._hoverIdx = idx;
+  draw();
+
+  document.getElementById('tt-time').textContent = labels[idx];
+  document.getElementById('tt-actual').textContent = '● Actual: ' + cumulative[idx].toLocaleString() + ' sigs';
+  document.getElementById('tt-baseline').textContent = '● Organic: ' + baseline[idx].toLocaleString() + ' sigs';
+  const diff = cumulative[idx] - baseline[idx];
+  document.getElementById('tt-diff').textContent = '▲ ' + diff.toLocaleString() + ' above organic baseline (' + (cumulative[idx] / Math.max(1, baseline[idx])).toFixed(1) + 'x)';
+
+  const tx = e.clientX - rect.left + 14;
+  const ty = e.clientY - rect.top - 10;
+  tooltip.style.left = (tx + 180 > W ? tx - 200 : tx) + 'px';
+  tooltip.style.top = ty + 'px';
+  tooltip.style.display = 'block';
+});
+
+canvas.addEventListener('mouseleave', () => {
+  tooltip.style.display = 'none';
+  window._hoverIdx = undefined;
+  draw();
+});
+</script>
+</body>
+</html>
