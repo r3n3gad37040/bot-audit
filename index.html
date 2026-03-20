@@ -162,7 +162,7 @@
 
   #sig-tooltip {
     position: absolute; background: #1e2130; border: 0.5px solid #3a3d4a;
-    border-radius: 6px; padding: 8px 12px; font-size: 12px; pointer-events: none;
+    border-radius: 8px; padding: 8px 12px; font-size: 12px; pointer-events: none;
     display: none; z-index: 10; min-width: 170px;
   }
   #sig-tooltip .tt-label { color: #888; margin-bottom: 4px; font-size: 11px; }
@@ -399,29 +399,56 @@
   .toc-list {
     list-style: none;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 4px;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 8px;
+    align-items: stretch;
+  }
+
+  .toc-list li {
+    display: flex;
   }
 
   .toc-list li a {
     display: flex;
-    align-items: baseline;
+    align-items: center;
     gap: 12px;
-    padding: 8px 0;
+    padding: 10px 14px;
     text-decoration: none;
-    color: var(--text2);
-    font-size: 15px;
-    border-bottom: 1px solid transparent;
-    transition: color 0.2s, border-color 0.2s;
+    color: var(--text);
+    font-size: 17px;
+    line-height: 1.25;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--bg3);
+    cursor: pointer;
+    flex: 1;
+    transition: color 0.15s, border-color 0.15s, background 0.15s;
   }
 
-  .toc-list li a:hover { color: var(--text); border-bottom-color: var(--border2); }
+  .toc-list li a:hover {
+    color: var(--text);
+    border-color: var(--border2);
+    background: var(--bg4);
+  }
+
+  .toc-docs-link {
+    color: var(--cyan) !important;
+    border-color: var(--cyan) !important;
+    background: transparent !important;
+  }
+  .toc-docs-link:hover {
+    color: #5eead4 !important;
+    border-color: #5eead4 !important;
+    background: transparent !important;
+  }
+  .toc-num-docs { color: var(--cyan); }
 
   .toc-num {
     font-family: 'Source Code Pro', monospace;
     font-size: 11px;
     color: var(--red);
     min-width: 28px;
+    flex-shrink: 0;
   }
 
   /* MAIN CONTENT */
@@ -858,6 +885,174 @@
   }
   .img-modal-close:hover { color: #fff; }
 
+  /* BACK TO TOP */
+  .back-to-top {
+    position: fixed;
+    bottom: 36px;
+    right: 36px;
+    width: 46px;
+    height: 46px;
+    background: var(--bg2);
+    border: 1px solid var(--cyan);
+    color: var(--cyan);
+    font-size: 26px;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 8000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s, box-shadow 0.25s;
+    box-shadow: 0 0 10px rgba(6,182,212,0.25);
+  }
+
+  .back-to-top.visible {
+    opacity: 1;
+    pointer-events: auto;
+    box-shadow: 0 0 16px rgba(6,182,212,0.5), 0 0 4px rgba(6,182,212,0.8);
+  }
+
+  .back-to-top:hover {
+    box-shadow: 0 0 24px rgba(6,182,212,0.7), 0 0 8px rgba(6,182,212,1);
+    color: #fff;
+    border-color: #5eead4;
+  }
+
+  /* SOURCE DOCUMENTS */
+  .doc-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 8px;
+  }
+
+  .doc-card {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    padding: 16px 20px;
+    cursor: pointer;
+    transition: border-color 0.15s, background 0.15s;
+  }
+
+  .doc-card:hover {
+    border-color: var(--border2);
+    background: var(--bg3);
+  }
+
+  .doc-type-badge {
+    font-family: 'Source Code Pro', monospace;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--bg);
+    background: var(--text3);
+    padding: 3px 7px;
+    flex-shrink: 0;
+  }
+
+  .doc-info { flex: 1; min-width: 0; }
+
+  .doc-title {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 4px;
+    line-height: 1.3;
+  }
+
+  .doc-summary {
+    font-size: 13px;
+    color: var(--text3);
+    line-height: 1.5;
+  }
+
+  .doc-open-btn {
+    font-family: 'Source Code Pro', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text3);
+    border: 1px solid var(--border);
+    background: none;
+    padding: 6px 14px;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: color 0.15s, border-color 0.15s;
+  }
+
+  .doc-card:hover .doc-open-btn {
+    color: var(--text);
+    border-color: var(--border2);
+  }
+
+  /* DOC VIEWER MODAL */
+  .doc-modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.93);
+    z-index: 9999;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .doc-modal-overlay.active { display: flex; }
+
+  .doc-modal-inner {
+    position: relative;
+    width: 88vw;
+    height: 90vh;
+    display: flex;
+    flex-direction: column;
+    background: var(--bg2);
+    border: 1px solid var(--border2);
+    box-shadow: 0 0 80px rgba(0,0,0,0.9);
+  }
+
+  .doc-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 18px;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+
+  .doc-modal-title {
+    font-family: 'Source Code Pro', monospace;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text3);
+  }
+
+  .doc-modal-close {
+    font-size: 20px;
+    color: var(--text2);
+    cursor: pointer;
+    background: none;
+    border: none;
+    font-family: monospace;
+    line-height: 1;
+    padding: 2px 6px;
+  }
+
+  .doc-modal-close:hover { color: #fff; }
+
+  .doc-modal-frame {
+    flex: 1;
+    width: 100%;
+    border: none;
+    background: #fff;
+  }
+
   /* PRINT */
   @media print {
     body { background: #fff; color: #000; }
@@ -1044,7 +1239,7 @@
     position: fixed;
     background: #1e2130;
     border: 1px solid #3a3d4a;
-    border-radius: 6px;
+    border-radius: 8px;
     padding: 7px 12px;
     font-size: 12px;
     pointer-events: none;
@@ -1092,7 +1287,7 @@
 
   <!-- LEFT COLUMN -->
   <div class="cover-left">
-    <div class="cover-tag">Petition Integrity Analysis — Confidential Working Document</div>
+    <div class="cover-tag">Petition Integrity Analysis</div>
     <h1>"Support for Crescent Gardens Cemetery" — <span>Change.org</span> Petition Forensic Analysis</h1>
     <p class="cover-sub">A forensic analysis of signature velocity, geographic concentration, comment authenticity, platform vulnerabilities, and coordinated non-organic campaign activity.</p>
 
@@ -1257,6 +1452,7 @@
     <li><a href="#s8"><span class="toc-num">VIII</span> Endorsement Section Analysis</a></li>
     <li><a href="#s9"><span class="toc-num">IX</span> Consolidated Indicator Scorecard</a></li>
     <li><a href="#s10"><span class="toc-num">X</span> Final Probability Assessment</a></li>
+    <li><a href="#s11" class="toc-docs-link"><span class="toc-num toc-num-docs">XI</span> Source Documents</a></li>
   </ul>
 </div>
 
@@ -2032,13 +2228,38 @@
 </div>
 
 
+
+<div class="section" id="s11">
+  <div class="section-header">
+    <div class="section-num">XI</div>
+    <h2>Source Documents</h2>
+  </div>
+  <p>Official and legal documents referenced in this report. Click any entry to open the document in a full-screen viewer.</p>
+
+  <div class="doc-grid" id="docGrid"></div>
+</div>
+
 </div><!-- end .content -->
 
 <!-- FOOTER -->
 <div class="report-footer">
   <div>Petition Integrity Analysis — Crescent Gardens Cemetery — Change.org</div>
   <div>Prepared: March 18, 2026 | Based on 99 timestamped data points, 5 screenshot captures, platform policy documentation, and peer-reviewed sources</div>
-  <div style="color:var(--red);">NOT FOR PUBLIC DISTRIBUTION WITHOUT LEGAL REVIEW</div>
+
+</div>
+
+<!-- BACK TO TOP -->
+<button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">&#8679;</button>
+
+<!-- DOCUMENT VIEWER MODAL -->
+<div class="doc-modal-overlay" id="docModal" onclick="closeDocModal(event)">
+  <div class="doc-modal-inner" onclick="event.stopPropagation()">
+    <div class="doc-modal-header">
+      <div class="doc-modal-title" id="docModalTitle"></div>
+      <button class="doc-modal-close" onclick="closeDocModal()">✕</button>
+    </div>
+    <iframe class="doc-modal-frame" id="docModalFrame" src=""></iframe>
+  </div>
 </div>
 
 <!-- IMAGE ZOOM MODAL -->
@@ -2362,6 +2583,74 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') { document.g
     <span class="hm-legend-item"><span class="hm-swatch" style="background:${hatchStyle};"></span> No data</span>
   `;
 })();
+</script>
+
+<script>
+// BACK TO TOP
+(function() {
+  const btn = document.getElementById('backToTop');
+  const threshold = window.innerHeight;
+  window.addEventListener('scroll', () => {
+    btn.classList.toggle('visible', window.scrollY > threshold);
+  }, { passive: true });
+})();
+
+// SOURCE DOCUMENTS
+const SOURCE_DOCS = [
+  {
+    type: 'PDF',
+    title: 'CUP230002 — Draft Final Conditions of Approval',
+    summary: 'Official Riverside County TLMA advisory notification document outlining the draft conditions attached to the recommendation of approval for the Crescent Gardens Cemetery project. 20 pages covering regulatory compliance requirements, mitigation measures, and operational limits — stamped DRAFT as of February 27, 2026.',
+    path: 'March-20-2026/CUP230002-DRAFT-FINAL_Conditions of Approval.pdf'
+  },
+  {
+    type: 'PDF',
+    title: 'All CEQA Violations — March 19, 2026',
+    summary: 'Legal memorandum identifying nine fatal deficiencies in the project\'s Mitigated Negative Declaration, arguing the county must prepare a full Environmental Impact Report or deny CUP230002 outright. Cites groundwater contamination risks, seismic hazards, environmental justice violations, and potential remediation liability exceeding $300–500 million.',
+    path: 'March-20-2026/All CEQA Violations 19 March 2026.pdf'
+  }
+];
+
+(function buildDocGrid() {
+  const grid = document.getElementById('docGrid');
+  if (!grid) return;
+  SOURCE_DOCS.forEach((doc, i) => {
+    const card = document.createElement('div');
+    card.className = 'doc-card';
+    card.innerHTML = `
+      <span class="doc-type-badge">${doc.type}</span>
+      <div class="doc-info">
+        <div class="doc-title">${doc.title}</div>
+        <div class="doc-summary">${doc.summary}</div>
+      </div>
+      <button class="doc-open-btn">Open</button>
+    `;
+    card.addEventListener('click', () => openDocModal(doc));
+    grid.appendChild(card);
+  });
+})();
+
+function openDocModal(doc) {
+  document.getElementById('docModalTitle').textContent = doc.title;
+  document.getElementById('docModalFrame').src = doc.path;
+  document.getElementById('docModal').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeDocModal(e) {
+  if (e && e.target !== document.getElementById('docModal')) return;
+  document.getElementById('docModal').classList.remove('active');
+  document.getElementById('docModalFrame').src = '';
+  document.body.style.overflow = '';
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    document.getElementById('docModal').classList.remove('active');
+    document.getElementById('docModalFrame').src = '';
+    document.body.style.overflow = '';
+  }
+});
 </script>
 </body>
 </html>
