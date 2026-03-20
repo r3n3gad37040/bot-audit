@@ -2698,7 +2698,11 @@ const SOURCE_DOCS = [
     `;
     card.querySelector('.doc-open-btn').addEventListener('click', (e) => {
       e.stopPropagation();
-      openDocModal(doc);
+      if (/Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+        window.open(doc.path, '_blank');
+      } else {
+        openDocModal(doc);
+      }
     });
     grid.appendChild(card);
   });
