@@ -992,6 +992,33 @@
     border-color: var(--border2);
   }
 
+  .doc-buttons {
+    display: flex;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+
+  .doc-download-btn {
+    font-family: 'Source Code Pro', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text3);
+    border: 1px solid var(--border);
+    background: none;
+    padding: 6px 14px;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: color 0.15s, border-color 0.15s;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .doc-card:hover .doc-download-btn {
+    color: var(--text);
+    border-color: var(--border2);
+  }
+
   /* DOC VIEWER MODAL */
   .doc-modal-overlay {
     display: none;
@@ -2623,9 +2650,15 @@ const SOURCE_DOCS = [
         <div class="doc-title">${doc.title}</div>
         <div class="doc-summary">${doc.summary}</div>
       </div>
-      <button class="doc-open-btn">Open</button>
+      <div class="doc-buttons">
+        <button class="doc-open-btn">Open</button>
+        <a href="${doc.path}" download class="doc-download-btn">Download</a>
+      </div>
     `;
-    card.addEventListener('click', () => openDocModal(doc));
+    card.querySelector('.doc-open-btn').addEventListener('click', (e) => {
+      e.stopPropagation();
+      openDocModal(doc);
+    });
     grid.appendChild(card);
   });
 })();
