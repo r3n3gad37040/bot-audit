@@ -1146,8 +1146,31 @@
     .profile-grid  { grid-template-columns: 1fr; }
     .two-col-grid  { grid-template-columns: 1fr; }
 
-    /* Heatmap — ensure it scrolls */
-    .hm-wrap { min-width: 480px; }
+    /* Heatmap — labels are now inside hm-wrap, scroll as one unit */
+    .hm-wrap       { min-width: 480px; }
+    .hm-legend-row { min-width: 480px; }
+
+    /* Source Document cards — stack vertically on mobile */
+    .doc-card {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    .doc-info { width: 100%; }
+    .doc-summary { font-size: 14px; }
+    .doc-buttons {
+      width: 100%;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .doc-open-btn,
+    .doc-download-btn {
+      width: 100%;
+      text-align: center;
+      padding: 11px 14px;
+      font-size: 14px;
+      box-sizing: border-box;
+    }
   }
 
   /* MMCC DOSSIER */
