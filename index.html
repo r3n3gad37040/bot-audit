@@ -987,6 +987,25 @@
     color: var(--text);
     margin-bottom: 4px;
     line-height: 1.3;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .doc-title-text { flex: 1; }
+
+  .doc-critical-chip {
+    flex-shrink: 0;
+    font-family: 'Source Code Pro', monospace;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #fff;
+    background: #c0392b;
+    padding: 3px 7px;
+    border-radius: 3px;
+    align-self: center;
   }
 
   .doc-summary {
@@ -2765,7 +2784,8 @@ const SOURCE_DOCS = [
     type: 'PDF',
     title: 'Technical Memorandum: Fatal Deficiencies in the Environmental Review — Groundwater Contaminant Fate and Transport Analysis (CUP230002)',
     summary: 'Prepared by J. Calverase, Senior Environmental Risk Analyst & CEQA Compliance Consultant (March 22, 2026). Uses MODFLOW 6 / MT3D-USGS analog modeling to project that necroleachate from 20,000 burials would breach the shallow perched aquifer within days and reach Canyon Lake\'s drinking water intake within 5–15 years. Concludes the MND is legally deficient under CEQA and demands preparation of a full EIR.',
-    path: 'shared/TECHNICAL_PAPER__MODFLOW_MODELING_OF_CONTAMINANTS_AT_CRESCENT_GARDENS.pdf'
+    path: 'shared/TECHNICAL_PAPER__MODFLOW_MODELING_OF_CONTAMINANTS_AT_CRESCENT_GARDENS.pdf',
+    critical: true
   }
 ];
 
@@ -2779,7 +2799,7 @@ const SOURCE_DOCS = [
       <span class="doc-num">${String(i + 1).padStart(2, '0')}</span>
       <span class="doc-type-badge">${doc.type}</span>
       <div class="doc-info">
-        <div class="doc-title">${doc.title}</div>
+        <div class="doc-title"><span class="doc-title-text">${doc.title}</span>${doc.critical ? '<span class="doc-critical-chip">Critical</span>' : ''}</div>
         <div class="doc-summary">${doc.summary}</div>
       </div>
       <div class="doc-buttons">
