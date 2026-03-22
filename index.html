@@ -949,6 +949,18 @@
     background: var(--bg3);
   }
 
+  .doc-num {
+    font-family: 'Source Code Pro', monospace;
+    font-size: 11px;
+    font-weight: 400;
+    color: var(--text3);
+    opacity: 0.45;
+    flex-shrink: 0;
+    min-width: 22px;
+    text-align: right;
+    user-select: none;
+  }
+
   .doc-type-badge {
     font-family: 'Source Code Pro', monospace;
     font-size: 10px;
@@ -2717,6 +2729,18 @@ const SOURCE_DOCS = [
     title: 'Technical Review of CGRM&E Water Quality Report — CUP230002 Appendix F-4',
     summary: 'Legal critique of the applicant\'s November 11, 2025 supplemental water quality report (Compass Consulting, on behalf of MMCC), which concluded the project poses less-than-significant impacts on surface and groundwater. Demonstrates that the report\'s core assumptions — sealed vaults, deep groundwater, and bioretention basin performance — are insufficient to rebut substantial evidence of unmitigated contamination risk, and that a full EIR is required under CEQA.',
     path: 'March-21-2026/Technical_Review_Resource_Management_and_Engineering_CGRM&E_letter.pdf'
+  },
+  {
+    type: 'PDF',
+    title: 'Notice of Public Hearing — Planning Commission, April 1, 2026 (English & Spanish)',
+    summary: 'Official Riverside County Planning Commission notice scheduling the CUP230002 public hearing for April 1, 2026 at 9:00 AM, Board Chambers, 4080 Lemon Street, Riverside. Announces the Commission\'s intent to adopt the Mitigated Negative Declaration for the proposed 20,000-plot, 84.99-acre Crescent Gardens Cemetery. Published in English and Spanish.',
+    path: 'March-21-2026/04-01-26 PC CUP230002_MND_Legal Ad_English_Spanish.pdf'
+  },
+  {
+    type: 'PDF',
+    title: 'Notice of Intent to Adopt a Mitigated Negative Declaration — CUP230002',
+    summary: 'Riverside County Planning Department notice dated July 31, 2025, opening the 30-day public comment period (August 5 – September 4, 2025) on the Draft MND for Crescent Gardens Cemetery. Identifies potentially significant environmental impacts across 20+ categories including hydrology, geologic/seismic, biological resources, cultural resources, and tribal cultural resources.',
+    path: 'March-21-2026/CUP230002 - NOI_Crescent Gardens.pdf'
   }
 ];
 
@@ -2727,6 +2751,7 @@ const SOURCE_DOCS = [
     const card = document.createElement('div');
     card.className = 'doc-card';
     card.innerHTML = `
+      <span class="doc-num">${String(i + 1).padStart(2, '0')}</span>
       <span class="doc-type-badge">${doc.type}</span>
       <div class="doc-info">
         <div class="doc-title">${doc.title}</div>
