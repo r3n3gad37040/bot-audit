@@ -230,6 +230,10 @@ The following comments were observed in screenshots of the petition's public fee
 
 **Ahmad** (listed as Murrieta Resident): His endorsement text is word-for-word identical to a truncated comment in the feed. Same mechanism, same conclusion.
 
+**"JUST" (×2):** The same user name "JUST" appears twice in the feed with identical comment text: "A cemetery is not just land—it is a sacred place that connects generations and honors those who came before us. Our loved ones deserve a place of dignity, peace, and respect where families can come to remember, pray, and reflect. As a Muslim and a citizen of USA I humbly request the city to approv…" — verbatim duplicate submission under the same name. This is consistent with either a double-submission script or a copy-paste campaign where the same template was submitted by the same account twice.
+
+**"Roohma":** Comment text is a rearranged variant of the "JUST" template — same clauses ("our loved ones deserve a place of dignity, peace, and respect"; "a cemetery is not just land—it is a sacred space that connects generations"), different sentence order. Classic template variant: same source text redistributed with minor reordering to evade direct duplicate detection.
+
 ### Comment Catalog with Flags
 
 | Comment | Signer | Flag |
@@ -247,6 +251,16 @@ The following comments were observed in screenshots of the petition's public fee
 | "This cemetery will be very beneficial for the riverside residents I fully support and encourage this project" | Moustafa | Generic |
 | "This proposal will immensely help the SoCal Muslim community by providing an affordable burial site, which unfortunately has become scarce." | Rizal | Slightly more detailed |
 | "I am leaving in Nuevo for 37 years and the cemetery project will be really good for Community and Perris Nuevo Menifee and I fully support this project" | Salma | Only comment with any local reference |
+| "A cemetery is not just land—it is a sacred place that connects generations and honors those who came before us. Our loved ones deserve a place of dignity, peace, and respect where families can come to remember, pray, and reflect. As a Muslim and a citizen of USA I humbly request the city to approv…" | JUST | **VERBATIM DUPLICATE — same text appears twice under same name** |
+| "A cemetery is not just land—it is a sacred place that connects generations and honors those who came before us. Our loved ones deserve a place of dignity, peace, and respect where families can come to remember, pray, and reflect. As a Muslim and a citizen of USA I humbly request the city to approv…" | JUST | **VERBATIM DUPLICATE — second identical entry (see above)** |
+| "This project is important for our community to have the appropriate burial standards and locations for our religion" | maryam | Generic |
+| "Our loved ones deserve a place of dignity, peace, and respect where families can come to remember, pray, and reflect. A cemetery is not just land—it is a sacred space that connects generations and honors those who came before us. Supporting Crescent Gardens Cemetery means supporting our…" | Roohma | **Template variant of "JUST" text — same clauses, reordered** |
+| "Need of community" | Muhammad | Generic / minimal |
+| "I Support for Crescent Gardens" | Abdul | Generic / minimal |
+| "Because this is very important to us" | Zabiullah | Generic / minimal |
+| "This proposal aims to serve the SoCal Muslim community by offering an affordable burial option, helping families during one of life's most difficult moments as availability continues to de…" | Syed Sher Ahmed | Generic — near-duplicate of Rizal comment in substance |
+| "Has a Riverside community we need a cemetery, we need people to support for themselves and families around them." | Tanisha | Grammatically broken — "Has a Riverside community" is non-standard phrasing consistent with template or non-native generation |
+| "Whenever we visit my father-in-law's gravesite, our children love that they're sending prayers to everyone in the garden." | Rana | Slightly personal; no geographic specificity to Meadowbrook project |
 
 ### Linguistic Uniformity Finding
 
