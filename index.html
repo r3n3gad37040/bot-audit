@@ -2985,17 +2985,17 @@ const SOURCE_DOCS = [
     `;
     card.querySelector('.doc-open-btn').addEventListener('click', (e) => {
       e.stopPropagation();
-      if (/Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-        window.open(doc.path, '_blank');
-      } else {
-        openDocModal(doc);
-      }
+      openDocModal(doc);
     });
     grid.appendChild(card);
   });
 })();
 
 function openDocModal(doc) {
+  if (/Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+    window.open(doc.path, '_blank');
+    return;
+  }
   document.getElementById('docModalTitle').textContent = doc.title;
   document.getElementById('docModalFrame').src = doc.path;
   document.getElementById('docModal').classList.add('active');

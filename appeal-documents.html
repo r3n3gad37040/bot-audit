@@ -874,6 +874,10 @@ const EXHIBITS = [
 // ── MODAL ──────────────────────────────────────────────────────
 
 function openModal(title, path, type) {
+  if (/Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+    window.open(path, '_blank');
+    return;
+  }
   const modal   = document.getElementById('docModal');
   const frame   = document.getElementById('modalFrame');
   const img     = document.getElementById('modalImg');
