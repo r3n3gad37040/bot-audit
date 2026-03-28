@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Appeal Documents &amp; Exhibits — Crescent Gardens Cemetery CUP230002</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Source+Sans+3:wght@300;400;500;600&family=Source+Code+Pro:wght@400;500&display=swap');
+
+  :root {
+    --bg: #0d0f14;
+    --bg2: #13161e;
+    --bg3: #1a1e29;
+    --bg4: #21263a;
+    --border: #2a3045;
+    --border2: #3a4260;
+    --text: #e8eaf0;
+    --text2: #9ba3b8;
+    --text3: #6b7490;
+    --red: #e84040;
+    --red-dim: #8b2020;
+    --red-bg: #1f1010;
+    --amber: #e8a020;
+    --amber-dim: #7a5010;
+    --amber-bg: #1a1408;
+    --green: #22c55e;
+    --green-dim: #0f5a28;
+    --green-bg: #0a1810;
+    --blue: #4a90d9;
+    --blue-dim: #1a3a6b;
+    --blue-bg: #0a1020;
+    --cyan: #06b6d4;
+    --accent: #e84040;
+    --gold: #c9a84c;
+    --gold-dim: #7a6020;
+    --gold-bg: #1a1408;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Source Sans 3', sans-serif;
+    font-weight: 300;
+    line-height: 1.75;
+    font-size: 20px;
+  }
+
+  /* ── HERO ─────────────────────────────────────────────────── */
+  .appeal-hero {
+    min-height: 52vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 72px calc(60px + 4vw);
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .appeal-hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background:
+      repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 39px,
+        rgba(42,48,69,0.3) 39px,
+        rgba(42,48,69,0.3) 40px
+      ),
+      repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 59px,
+        rgba(42,48,69,0.2) 59px,
+        rgba(42,48,69,0.2) 60px
+      );
+    pointer-events: none;
+  }
+
+  .back-nav {
+    font-family: 'Source Code Pro', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text3);
+    text-decoration: none;
+    margin-bottom: 40px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: color 0.15s;
+    position: relative;
+    z-index: 1;
+  }
+  .back-nav:hover { color: var(--text2); }
+
+  .appeal-hero-tag {
+    font-family: 'Source Code Pro', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .appeal-hero-tag::before {
+    content: '';
+    display: inline-block;
+    width: 32px;
+    height: 2px;
+    background: var(--gold);
+  }
+
+  .appeal-hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(30px, 4.5vw, 52px);
+    font-weight: 700;
+    line-height: 1.1;
+    color: #fff;
+    margin-bottom: 18px;
+    max-width: 780px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .appeal-hero h1 span { color: var(--gold); }
+
+  .appeal-hero-sub {
+    font-size: 17px;
+    font-weight: 300;
+    color: var(--text2);
+    margin-bottom: 40px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .appeal-hero-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 36px;
+    border-top: 1px solid var(--border);
+    padding-top: 28px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .appeal-meta-label {
+    font-family: 'Source Code Pro', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: var(--text3);
+    text-transform: uppercase;
+    margin-bottom: 3px;
+  }
+
+  .appeal-meta-value {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text);
+  }
+
+  /* ── PAGE BODY ────────────────────────────────────────────── */
+  .appeal-body {
+    max-width: 1160px;
+    margin: 0 auto;
+    padding: 0 56px 100px;
+  }
+
+  /* ── SECTION HEADERS ──────────────────────────────────────── */
+  .appeal-section {
+    padding-top: 64px;
+  }
+
+  .appeal-section-header {
+    margin-bottom: 28px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .appeal-section-label {
+    font-family: 'Source Code Pro', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text3);
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  .appeal-section-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  /* ── PRIMARY DOC CARDS (Appeal Documents) ─────────────────── */
+  .primary-doc-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(440px, 1fr));
+    gap: 12px;
+  }
+
+  .primary-doc-card {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--gold);
+    padding: 22px 24px;
+    transition: border-color 0.15s, background 0.15s;
+    cursor: pointer;
+  }
+
+  .primary-doc-card:hover {
+    background: var(--bg3);
+    border-color: var(--gold-dim);
+    border-left-color: var(--gold);
+  }
+
+  .primary-doc-card-top {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .primary-doc-type {
+    font-family: 'Source Code Pro', monospace;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--bg);
+    background: var(--gold);
+    padding: 3px 7px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .primary-doc-title {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--text);
+    line-height: 1.35;
+  }
+
+  .primary-doc-desc {
+    font-size: 13px;
+    color: var(--text3);
+    line-height: 1.55;
+  }
+
+  .primary-doc-buttons {
+    display: flex;
+    gap: 8px;
+  }
+
+  /* ── SUMMARY CARD ─────────────────────────────────────────── */
+  .summary-card {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    background: transparent;
+    border: 1px solid var(--cyan);
+    padding: 18px 22px;
+    transition: background 0.15s;
+    cursor: pointer;
+    margin-top: 32px;
+  }
+
+  .summary-card:hover { background: rgba(6,182,212,0.05); }
+
+  .summary-card-label {
+    font-family: 'Source Code Pro', monospace;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--bg);
+    background: var(--cyan);
+    padding: 3px 8px;
+    flex-shrink: 0;
+  }
+
+  .summary-card-title {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--cyan);
+    flex: 1;
+  }
+
+  .summary-card-desc {
+    font-size: 13px;
+    color: var(--text3);
+    line-height: 1.5;
+    display: none;
+  }
+
+  .summary-card-buttons {
+    display: flex;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+
+  /* ── EXHIBIT GRID ─────────────────────────────────────────── */
+  .exhibit-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .exhibit-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    transition: border-color 0.15s, background 0.15s;
+  }
+
+  .exhibit-card:hover {
+    border-color: var(--border2);
+    background: var(--bg3);
+  }
+
+  .exhibit-card-header {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 16px 20px;
+  }
+
+  .exhibit-letter {
+    font-family: 'Source Code Pro', monospace;
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--red);
+    min-width: 28px;
+    text-align: center;
+    flex-shrink: 0;
+    user-select: none;
+  }
+
+  .exhibit-info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .exhibit-title {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 3px;
+    line-height: 1.3;
+  }
+
+  .exhibit-desc {
+    font-size: 13px;
+    color: var(--text3);
+    line-height: 1.5;
+  }
+
+  /* single-file exhibit: buttons sit in header */
+  .exhibit-card-buttons {
+    display: flex;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+
+  /* multi-file exhibit: sub-rows below header */
+  .exhibit-files {
+    border-top: 1px solid var(--border);
+  }
+
+  .exhibit-file-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 10px 20px 10px 66px;
+    border-bottom: 1px solid var(--border);
+    transition: background 0.15s;
+  }
+
+  .exhibit-file-row:last-child { border-bottom: none; }
+  .exhibit-file-row:hover { background: var(--bg4); }
+
+  .exhibit-file-type {
+    font-family: 'Source Code Pro', monospace;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--bg);
+    background: var(--text3);
+    padding: 2px 6px;
+    flex-shrink: 0;
+  }
+
+  .exhibit-file-label {
+    font-size: 13px;
+    color: var(--text2);
+    flex: 1;
+    min-width: 0;
+  }
+
+  .exhibit-file-buttons {
+    display: flex;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+
+  /* ── SHARED BUTTON STYLES ─────────────────────────────────── */
+  .btn-open {
+    font-family: 'Source Code Pro', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text3);
+    border: 1px solid var(--border);
+    background: none;
+    padding: 6px 14px;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: color 0.15s, border-color 0.15s;
+  }
+
+  .btn-open:hover {
+    color: var(--text);
+    border-color: var(--border2);
+  }
+
+  .btn-download {
+    font-family: 'Source Code Pro', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text3);
+    border: 1px solid var(--border);
+    background: none;
+    padding: 6px 14px;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: color 0.15s, border-color 0.15s;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .btn-download:hover {
+    color: var(--text);
+    border-color: var(--border2);
+  }
+
+  /* ── PDF MODAL ────────────────────────────────────────────── */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.93);
+    z-index: 9999;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .modal-overlay.active { display: flex; }
+
+  .modal-inner {
+    position: relative;
+    width: 88vw;
+    height: 90vh;
+    display: flex;
+    flex-direction: column;
+    background: var(--bg2);
+    border: 1px solid var(--border2);
+    box-shadow: 0 0 80px rgba(0,0,0,0.9);
+  }
+
+  .modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 18px;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+    gap: 16px;
+  }
+
+  .modal-title {
+    font-family: 'Source Code Pro', monospace;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text3);
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .modal-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+  }
+
+  .modal-download-btn {
+    font-family: 'Source Code Pro', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text3);
+    border: 1px solid var(--border);
+    background: none;
+    padding: 4px 12px;
+    text-decoration: none;
+    display: inline-block;
+    transition: color 0.15s, border-color 0.15s;
+  }
+
+  .modal-download-btn:hover {
+    color: var(--text);
+    border-color: var(--border2);
+  }
+
+  .modal-close {
+    font-size: 20px;
+    color: var(--text2);
+    cursor: pointer;
+    background: none;
+    border: none;
+    font-family: monospace;
+    line-height: 1;
+    padding: 2px 6px;
+  }
+
+  .modal-close:hover { color: #fff; }
+
+  .modal-pdf-frame {
+    flex: 1;
+    width: 100%;
+    border: none;
+    background: #fff;
+    display: none;
+  }
+
+  .modal-img-wrap {
+    flex: 1;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    overflow: auto;
+    padding: 20px;
+    background: var(--bg);
+  }
+
+  .modal-img-wrap img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+  }
+
+  .modal-overlay.type-pdf .modal-pdf-frame { display: block; }
+  .modal-overlay.type-pdf .modal-img-wrap  { display: none; }
+  .modal-overlay.type-img .modal-pdf-frame { display: none; }
+  .modal-overlay.type-img .modal-img-wrap  { display: flex; }
+
+  /* ── FOOTER ───────────────────────────────────────────────── */
+  .appeal-footer {
+    background: var(--bg2);
+    border-top: 1px solid var(--border);
+    padding: 28px calc(60px + 4vw);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+  }
+
+  .appeal-footer-left {
+    font-family: 'Source Code Pro', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text3);
+  }
+
+  .appeal-footer-back {
+    font-family: 'Source Code Pro', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text3);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+
+  .appeal-footer-back:hover { color: var(--text2); }
+
+  /* ── RESPONSIVE ───────────────────────────────────────────── */
+  @media (max-width: 900px) {
+    .appeal-hero { padding: 48px 24px; }
+    .appeal-body { padding: 0 20px 80px; }
+    .primary-doc-grid { grid-template-columns: 1fr; }
+    .exhibit-file-row { padding-left: 20px; }
+    .exhibit-card-header { flex-wrap: wrap; }
+    .exhibit-card-buttons { width: 100%; justify-content: flex-end; }
+    .appeal-footer { padding: 24px 20px; flex-direction: column; align-items: flex-start; gap: 12px; }
+  }
+
+  @media (max-width: 600px) {
+    .modal-inner { width: 96vw; height: 94vh; }
+    .exhibit-file-buttons { flex-direction: column; gap: 4px; }
+    .primary-doc-buttons { flex-direction: column; gap: 4px; }
+    .summary-card { flex-wrap: wrap; }
+    .summary-card-buttons { width: 100%; }
+    .appeal-hero-meta { gap: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── HERO ──────────────────────────────────────────────────── -->
+<div class="appeal-hero">
+  <a href="index.html" class="back-nav">← Back to Petition Analysis</a>
+  <div class="appeal-hero-tag">Formal Legal Appeal · CUP230002</div>
+  <h1>Appeal Documents <span>&amp;</span> Exhibits</h1>
+  <p class="appeal-hero-sub">Crescent Gardens Cemetery — Riverside County Planning Commission</p>
+  <div class="appeal-hero-meta">
+    <div class="appeal-meta-item">
+      <div class="appeal-meta-label">Filed</div>
+      <div class="appeal-meta-value">March 27, 2026</div>
+    </div>
+    <div class="appeal-meta-item">
+      <div class="appeal-meta-label">Case</div>
+      <div class="appeal-meta-value">CUP230002</div>
+    </div>
+    <div class="appeal-meta-item">
+      <div class="appeal-meta-label">Exhibits</div>
+      <div class="appeal-meta-value">A – P</div>
+    </div>
+    <div class="appeal-meta-item">
+      <div class="appeal-meta-label">Hearing</div>
+      <div class="appeal-meta-value">April 1, 2026</div>
+    </div>
+    <div class="appeal-meta-item">
+      <div class="appeal-meta-label">Jurisdiction</div>
+      <div class="appeal-meta-value">Riverside County Planning Commission</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── PAGE BODY ──────────────────────────────────────────────── -->
+<div class="appeal-body">
+
+  <!-- APPEAL DOCUMENTS -->
+  <div class="appeal-section">
+    <div class="appeal-section-header">
+      <span class="appeal-section-label">Core Filing</span>
+      <h2>Appeal Documents</h2>
+    </div>
+    <div class="primary-doc-grid" id="primaryDocGrid"></div>
+  </div>
+
+  <!-- SUMMARY OF EXHIBITS -->
+  <div id="summaryCardWrap"></div>
+
+  <!-- EXHIBITS A–P -->
+  <div class="appeal-section">
+    <div class="appeal-section-header">
+      <span class="appeal-section-label">Supporting Evidence</span>
+      <h2>Exhibits A – P</h2>
+    </div>
+    <div class="exhibit-grid" id="exhibitGrid"></div>
+  </div>
+
+</div><!-- /.appeal-body -->
+
+<!-- ── FOOTER ─────────────────────────────────────────────────── -->
+<div class="appeal-footer">
+  <div class="appeal-footer-left">CUP230002 · Crescent Gardens Cemetery · Riverside County</div>
+  <a href="index.html" class="appeal-footer-back">← Petition Integrity Analysis</a>
+</div>
+
+<!-- ── MODAL ──────────────────────────────────────────────────── -->
+<div class="modal-overlay" id="docModal" onclick="closeModal(event)">
+  <div class="modal-inner" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <div class="modal-title" id="modalTitle"></div>
+      <div class="modal-header-actions">
+        <a href="#" id="modalDownloadBtn" download class="modal-download-btn">Download</a>
+        <button class="modal-close" onclick="closeModal()">✕</button>
+      </div>
+    </div>
+    <iframe class="modal-pdf-frame" id="modalFrame" src=""></iframe>
+    <div class="modal-img-wrap" id="modalImgWrap">
+      <img id="modalImg" src="" alt="">
+    </div>
+  </div>
+</div>
+
+<script>
+// ── DATA ───────────────────────────────────────────────────────
+
+const APPEAL_DOCS = [
+  {
+    title: 'Table of Contents — Crescent Gardens Legal Appeal & Objection',
+    desc: 'Complete table of contents for the formal legal appeal and objection submitted to the Riverside County Planning Commission regarding CUP230002.',
+    path: 'Crescent Garden Cemetery Appeal  Document/Table of Contents Crescent Gardens Legal Appeal and Objection .pdf',
+    type: 'PDF'
+  },
+  {
+    title: 'Appeal Summary — Final, 27 March 2026',
+    desc: 'Comprehensive summary of the formal legal appeal and objection prepared by G. Protocol, dated March 27, 2026, addressing all grounds for denial of CUP230002.',
+    path: 'Crescent Garden Cemetery Appeal  Document/Crescent Garden Cemetery Appeal Summary  Final 27 March 2026 by G. Protocol.pdf',
+    type: 'PDF'
+  }
+];
+
+const SUMMARY_DOC = {
+  title: 'Summary of Exhibits — Legal Appeal & Formal Objection',
+  desc: 'Master index and summary of all exhibits submitted in support of the legal appeal and formal objection to CUP230002 — Crescent Gardens Cemetery.',
+  path: 'Crescent Garden Cemetery Appeal Exhibits/Summary Of Exhibits Legal Appeal and Formal Objection Crescent Gardens Cemetery CUP 230002.pdf',
+  type: 'PDF'
+};
+
+const EXHIBITS = [
+  {
+    letter: 'A',
+    title: 'Final Initial Study — Mitigated Negative Declaration (IS-MND)',
+    desc: 'Official environmental document prepared November 13, 2025 for CUP230002. The county\'s initial assessment determining a full EIR is not required, subject to ongoing CEQA challenges.',
+    files: [
+      { label: 'Final IS-MND (11-13-25)', path: 'Crescent Garden Cemetery Appeal Exhibits/Exhibit A Final IS-MND Crescent Gardens Cemetery/Final IS-MND Crescent Garden Cemetery 11-13-25.pdf', type: 'PDF' }
+    ]
+  },
+  {
+    letter: 'B',
+    title: 'Concrete Burial Vaults — Site Documentation',
+    desc: 'Photographic documentation of the Wilbert Monticello sealed concrete burial vaults proposed for the site — 20,000 units totaling 40 million pounds of subsurface load.',
+    files: [
+      { label: 'B-1 — Concrete Vault', path: 'Crescent Garden Cemetery Appeal Exhibits/Exhibit B Concrete Vaults Crescent Garden Cemetery/Exhibit B-1 Concrete Vault Crescent Gardens Cemetery.png', type: 'IMAGE' },
+      { label: 'B-2 — On-Site Screenshot', path: 'Crescent Garden Cemetery Appeal Exhibits/Exhibit B Concrete Vaults Crescent Garden Cemetery/Screenshot From 2026-03-26 11-58-36.png', type: 'IMAGE' }
+    ]
+  },
+  {
+    letter: 'C',
+    title: 'Elsinore Valley Municipal Water District (EVMWD) Letter',
+    desc: 'Agency letter from EVMWD dated August 27, 2025, addressing water supply and quality concerns related to the proposed Crescent Gardens Cemetery.',
+    files: [
+      { label: 'EVMWD Agency Letter (08.27.25)', path: 'Crescent Garden Cemetery Appeal Exhibits/Exhibit C Elsinore Valley Municipal Water District EVMWD Letter Crescent Garden Cemetery/Agency Letter-EVMWD 08.27.25.pdf', type: 'PDF' }
+    ]
+  },
+  {
+    letter: 'D',
+    title: 'FEMA Flood Zone Map — Project Site',
+    desc: 'Federal Emergency Management Agency flood zone map showing the project site\'s flood risk classification and proximity to flood-prone areas.',
+    files: [
+      { label: 'FEMA Flood Map', path: 'Crescent Garden Cemetery Appeal Exhibits/Exhibit D Crescent Gardens Cemetery FEMA Flood Map/Crescent Garden Cemetery FEMA Flood Map.png', type: 'IMAGE' }
+    ]
+  },
+  {
+    letter: 'E',
+    title: 'Elsinore Fault Line Map',
+    desc: 'Geologic map documenting the proximity of the proposed cemetery site to the Elsinore Fault Zone, capable of M7.5+ ruptures, establishing unmitigable seismic hazard under CEQA.',
+    files: [
+      { label: 'Elsinore Fault Line Map', path: 'Crescent Garden Cemetery Appeal Exhibits/Exhibit E Crescent Garden Cemetery Elsinore Fault Map/Exhibit E Crescent Garden Cemetery Elsinore Fault Line.pdf', type: 'PDF' }
+    ]
+  },
+  {
+    letter: 'F',
+    title: 'Earthquake & Liquefaction Risk — Elsinore Fault Scenarios M3.0–M7.0',
+    desc: 'Probabilistic analysis of earthquake and liquefaction risk at the project site across fault rupture scenarios ranging from M3.0 to M7.0 on the Elsinore Fault.',
+    files: [
+      { label: 'Earthquake & Liquefaction Probability Analysis', path: 'Crescent Garden Cemetery Appeal Exhibits/Exhibit F Earthquake & Liquefaction Risk Elsinore Fault Scenerios M3.0 to M7.0 Crescent Garden Cemetery/Exhibit F Crescent Garden Cemetery Earthquake & Liquefaction Risk Elsinore Fault Scenerios M3.0 to M7.0 Probability.pdf', type: 'PDF' }
+    ]
+  },
+  {
+    letter: 'G',
+    title: 'Assessment of Cemetery Effects on Groundwater Quality Using GIS',
+    desc: 'Peer-reviewed study (Desalination and Water Treatment, 2019) confirming elevated contamination in groundwater wells adjacent to cemeteries — including chloride, sodium, phosphate, TDS, fluoride, lead, and heterotrophic bacteria counts.',
+    files: [
+      { label: 'Desalination & Water Treatment Publication', path: 'Crescent Garden Cemetery Appeal Exhibits/Exhibit G Islamic Burial Desalination and Water Treatment Assessment Crescent Garden Cemetery/Assessment of Cemetery Effects on Groundwater Quality Using GIS (Desalination and Water Treatment Publication).pdf', type: 'PDF' }
+    ]
+  },
+  {
+    letter: 'H',
+    title: 'MODFLOW Contaminant Transport Model — Crescent Gardens Cemetery',
+    desc: 'Technical paper presenting MODFLOW groundwater modeling of contaminant fate and transport at the proposed cemetery site in Meadowbrook, California. Final version dated March 22, 2026.',
+    files: [
+      { label: 'MODFLOW Technical Paper — Final (22 March 2026)', path: 'Crescent Garden Cemetery Appeal Exhibits/Exhibit H MODFLOW Fate and Transport Model Crescent Garden Cemetery/Exhibit H TECHNICAL PAPER_ MODFLOW MODELING OF CONTAMINANTS AT CRESCENT GARDENS CEMETERY MEADOWBROOK CALIFORNIA FINAL 22 MARCH 2026.pdf', type: 'PDF' }
+    ]
+  },
+  {
+    letter: 'I',
+    title: 'Site Geology Maps — CUP23002',
+    desc: 'Geological survey maps of the Crescent Gardens Cemetery site, including a custom site geology overlay for CUP23002 and the base USGS Elsinore quadrangle geology map.',
+    files: [
+      { label: 'Site Geology Overlay Map (CUP23002)', path: 'Crescent Garden Cemetery Appeal Exhibits/Exhibit I Crescent Gardens Cemetary Site Geology Maps/Exhibit I Crescent Garden Cemetery CUP23002 Site Geology Overlay Map.pdf', type: 'PDF' },
+      { label: 'USGS Elsinore Quadrangle Geology Map', path: 'Crescent Garden Cemetery Appeal Exhibits/Exhibit I Crescent Gardens Cemetary Site Geology Maps/USGS ELS MAP GEOLOGY.pdf', type: 'PDF' }
+    ]
+  },
+  {
+    letter: 'J',
+    title: 'CalEnviroScreen — Meadowbrook, California',
+    desc: 'CalEnviroScreen data for the Meadowbrook community demonstrating existing cumulative environmental burden scores, pollution exposure, and environmental justice designation relevant to CUP230002.',
+    files: [
+      { label: 'CalEnviroScreen Report — Meadowbrook', path: 'Crescent Garden Cemetery Appeal Exhibits/Exhibit J CalEnviroScreen Meadowbrook California Crescent Gardens Cemetery/CalEnviroScreen Meadowbrook California Crescent Garden Cemetery.pdf', type: 'PDF' }
+    ]
+  },
+  {
+    letter: 'K',
+    title: 'Environmental Justice Review — CUP230002',
+    desc: 'Documentation of the county\'s environmental justice review failures under CEQA, including the official EJ checklist and May 2025 email correspondence used as evidence of procedural deficiency.',
+    files: [
+      { label: 'K-1 — Environmental Justice Checklist', path: 'Crescent Garden Cemetery Appeal Exhibits/Exhibit K Environmental Justice Meadowbrook California Crescent Garden Cemetery/Exhibit K-1 Environmental Justice Checklist Crescent Garden Cemetery CUP230002.pdf', type: 'PDF' },
+      { label: 'K-2 — Environmental Justice Email (13 May 2025)', path: 'Crescent Garden Cemetery Appeal Exhibits/Exhibit K Environmental Justice Meadowbrook California Crescent Garden Cemetery/Exhibit K-2 Environmental Justice EMAIL Crescent Garden Cemetery 13 May 2025 .pdf', type: 'PDF' }
+    ]
+  },
+  {
+    letter: 'L',
+    title: 'Change.org Petition Opposing the Crescent Gardens Cemetery',
+    desc: 'Documentation of the opposing Change.org petition and geographic heat map of signatories by ZIP code, demonstrating localized community opposition from directly affected residents.',
+    files: [
+      { label: 'L-1 — Petition Document', path: 'Crescent Garden Cemetery Appeal Exhibits/Exhibit L Change.Org Petition Opposing The Crescent Garden Cemetery/Exhibit L-1 Change.org Petition Opposing the Crescent Garden Cemetery.pdf', type: 'PDF' },
+      { label: 'L-2 — ZIP Code Signatory Heat Map', path: 'Crescent Garden Cemetery Appeal Exhibits/Exhibit L Change.Org Petition Opposing The Crescent Garden Cemetery/Exhibit L-2 Change.org Petition Opposing the Crescent Garden Cemetery Zip Code Heat Map.pdf', type: 'PDF' }
+    ]
+  },
+  {
+    letter: 'M',
+    title: 'Canyon Lake City Council Resolution Letter',
+    desc: 'Official resolution letter from Canyon Lake City Council dated August 18, 2025, documenting the unanimous non-binding vote in opposition to Crescent Gardens Cemetery CUP230002.',
+    files: [
+      { label: 'Canyon Lake Resolution Letter (08.18.25)', path: 'Crescent Garden Cemetery Appeal Exhibits/Exhibit M Canyon Lake Resolution Letter Crescent Gardens Cemetery 08.18.25/Exhibit M Canyon Lake Resolution Letter Crescent Gardens Cemetery 08.18.25.pdf', type: 'PDF' }
+    ]
+  },
+  {
+    letter: 'N',
+    title: 'Assessing the Influence of Cemetery Proximity on Real Estate',
+    desc: 'Academic research examining the documented negative impact of cemetery proximity on residential property values, directly supporting community property value impact claims.',
+    files: [
+      { label: 'Cemetery Proximity & Real Estate Study', path: 'Crescent Garden Cemetery Appeal Exhibits/Exhibit N Assessing The Influence of Cemetery Proximity to Real Estate Crescent Garden Cemetery/Exhibit N Assessing The Influence of Cemetery Proximity to Real Esatate Crescent Garden Cemetery.pdf', type: 'PDF' }
+    ]
+  },
+  {
+    letter: 'O',
+    title: 'MMCC Organizational Incapacity & Non-Profit Status',
+    desc: 'Documentation challenging the organizational capacity and non-profit status of the Muslim Mortuary and Cemetery Committee (MMCC), including their 2024 IRS filing and 501(c)(3) webpage claim.',
+    files: [
+      { label: 'O-1 — MMCC 2024 IRS Full Filing', path: 'Crescent Garden Cemetery Appeal Exhibits/Exhibit O MMCC Incapacity and Non Profit Status Crescent Gardens Cemetery/Exhibit O-1 MMCC 2024 IRS Full Filing Crescent Garden Cemetery.pdf', type: 'PDF' },
+      { label: 'O-2 — MMCC 501(c)(3) Webpage Claim', path: 'Crescent Garden Cemetery Appeal Exhibits/Exhibit O MMCC Incapacity and Non Profit Status Crescent Gardens Cemetery/Exhibit O-2 MMCC 501(c)(3) Webpage Claim Crescent Garden Cemetery.pdf', type: 'PDF' }
+    ]
+  },
+  {
+    letter: 'P',
+    title: 'Media Coverage — ABC 7 & Press Enterprise, August 2025',
+    desc: 'Press coverage from ABC 7 and the Press Enterprise newspaper documenting public awareness and community response to the Crescent Gardens Cemetery proposal in August 2025.',
+    files: [
+      { label: 'P-1 & P-2 — ABC 7 & Press Enterprise Coverage', path: 'Crescent Garden Cemetery Appeal Exhibits/Exhibit P Media Coverage Aug 2025 Crescent Garden Cemetery/Exhibit P-1&2 Media Coverage ABC 7 & Press Enterprise August 2025 Crescent Garden Cemetery.pdf', type: 'PDF' }
+    ]
+  }
+];
+
+// ── MODAL ──────────────────────────────────────────────────────
+
+function openModal(title, path, type) {
+  const modal   = document.getElementById('docModal');
+  const frame   = document.getElementById('modalFrame');
+  const img     = document.getElementById('modalImg');
+  const dlBtn   = document.getElementById('modalDownloadBtn');
+  const titleEl = document.getElementById('modalTitle');
+
+  titleEl.textContent = title;
+  dlBtn.href = path;
+  dlBtn.download = path.split('/').pop();
+
+  if (type === 'IMAGE') {
+    modal.className = 'modal-overlay active type-img';
+    img.src = path;
+    img.alt = title;
+    frame.src = '';
+  } else {
+    modal.className = 'modal-overlay active type-pdf';
+    frame.src = path;
+    img.src = '';
+  }
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal(e) {
+  if (e && e.target !== document.getElementById('docModal')) return;
+  const modal = document.getElementById('docModal');
+  modal.className = 'modal-overlay';
+  document.getElementById('modalFrame').src = '';
+  document.getElementById('modalImg').src = '';
+  document.body.style.overflow = '';
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeModal();
+});
+
+// ── BUILD: PRIMARY DOCS ────────────────────────────────────────
+
+(function buildPrimaryDocs() {
+  const grid = document.getElementById('primaryDocGrid');
+  APPEAL_DOCS.forEach(doc => {
+    const card = document.createElement('div');
+    card.className = 'primary-doc-card';
+    card.innerHTML = `
+      <div class="primary-doc-card-top">
+        <span class="primary-doc-type">${doc.type}</span>
+        <div class="primary-doc-title">${doc.title}</div>
+      </div>
+      <div class="primary-doc-desc">${doc.desc}</div>
+      <div class="primary-doc-buttons">
+        <button class="btn-open">Open</button>
+        <a href="${doc.path}" download class="btn-download">Download</a>
+      </div>
+    `;
+    card.querySelector('.btn-open').addEventListener('click', e => {
+      e.stopPropagation();
+      openModal(doc.title, doc.path, doc.type);
+    });
+    card.addEventListener('click', () => openModal(doc.title, doc.path, doc.type));
+    grid.appendChild(card);
+  });
+})();
+
+// ── BUILD: SUMMARY CARD ────────────────────────────────────────
+
+(function buildSummaryCard() {
+  const wrap = document.getElementById('summaryCardWrap');
+  const doc = SUMMARY_DOC;
+  wrap.style.paddingTop = '32px';
+  const card = document.createElement('div');
+  card.className = 'summary-card';
+  card.innerHTML = `
+    <span class="summary-card-label">Master Index</span>
+    <div class="summary-card-title">${doc.title}</div>
+    <div class="summary-card-buttons">
+      <button class="btn-open">Open</button>
+      <a href="${doc.path}" download class="btn-download">Download</a>
+    </div>
+  `;
+  card.querySelector('.btn-open').addEventListener('click', e => {
+    e.stopPropagation();
+    openModal(doc.title, doc.path, doc.type);
+  });
+  card.addEventListener('click', () => openModal(doc.title, doc.path, doc.type));
+  wrap.appendChild(card);
+})();
+
+// ── BUILD: EXHIBITS ────────────────────────────────────────────
+
+(function buildExhibits() {
+  const grid = document.getElementById('exhibitGrid');
+
+  EXHIBITS.forEach(ex => {
+    const card = document.createElement('div');
+    card.className = 'exhibit-card';
+
+    const singleFile = ex.files.length === 1;
+
+    let headerButtons = '';
+    if (singleFile) {
+      headerButtons = `
+        <div class="exhibit-card-buttons">
+          <button class="btn-open" data-idx="0">Open</button>
+          <a href="${ex.files[0].path}" download class="btn-download">Download</a>
+        </div>
+      `;
+    }
+
+    card.innerHTML = `
+      <div class="exhibit-card-header">
+        <span class="exhibit-letter">${ex.letter}</span>
+        <div class="exhibit-info">
+          <div class="exhibit-title">${ex.title}</div>
+          <div class="exhibit-desc">${ex.desc}</div>
+        </div>
+        ${headerButtons}
+      </div>
+      ${!singleFile ? buildFileRows(ex.files) : ''}
+    `;
+
+    // single-file: open on card click or open button
+    if (singleFile) {
+      const f = ex.files[0];
+      card.querySelector('.btn-open').addEventListener('click', e => {
+        e.stopPropagation();
+        openModal(`Exhibit ${ex.letter} — ${f.label}`, f.path, f.type);
+      });
+      card.querySelector('.exhibit-card-header').style.cursor = 'pointer';
+      card.querySelector('.exhibit-card-header').addEventListener('click', () => {
+        openModal(`Exhibit ${ex.letter} — ${f.label}`, f.path, f.type);
+      });
+    }
+
+    // multi-file: open buttons per row
+    if (!singleFile) {
+      card.querySelectorAll('.exhibit-file-row').forEach((row, i) => {
+        const f = ex.files[i];
+        row.querySelector('.btn-open').addEventListener('click', e => {
+          e.stopPropagation();
+          openModal(`Exhibit ${ex.letter} — ${f.label}`, f.path, f.type);
+        });
+        row.style.cursor = 'pointer';
+        row.addEventListener('click', () => {
+          openModal(`Exhibit ${ex.letter} — ${f.label}`, f.path, f.type);
+        });
+      });
+    }
+
+    grid.appendChild(card);
+  });
+})();
+
+function buildFileRows(files) {
+  return `<div class="exhibit-files">${files.map(f => `
+    <div class="exhibit-file-row">
+      <span class="exhibit-file-type">${f.type}</span>
+      <span class="exhibit-file-label">${f.label}</span>
+      <div class="exhibit-file-buttons">
+        <button class="btn-open">Open</button>
+        <a href="${f.path}" download class="btn-download">Download</a>
+      </div>
+    </div>
+  `).join('')}</div>`;
+}
+</script>
+</body>
+</html>
