@@ -781,9 +781,8 @@
     border: 1px solid var(--border);
     padding: 12px 16px;
     display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
-    gap: 12px;
+    flex-direction: column;
+    gap: 8px;
   }
 
   .comment-card.flagged { border-left: 3px solid var(--red); background: var(--red-bg); }
@@ -801,6 +800,7 @@
     font-size: 11px;
     color: var(--text3);
     white-space: nowrap;
+    align-self: flex-end;
   }
 
   .comment-flag {
@@ -809,7 +809,7 @@
     color: var(--red);
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    white-space: nowrap;
+    white-space: normal;
   }
 
   /* PROBABILITY */
@@ -1203,13 +1203,7 @@
     .flex-image-row           { flex-direction: column !important; }
     .flex-image-row > div     { flex: none !important; width: 100% !important; }
 
-    /* Comment cards — prevent name/flag from overflowing */
-    .comment-card {
-      flex-direction: column;
-      gap: 6px;
-    }
-    .comment-card > div { align-self: flex-start; }
-    .comment-flag { white-space: normal; }
+    /* Comment cards — already column layout in base; no overrides needed */
 
     /* Endorsers table — force horizontal scroll, fix column widths */
     .endorsers-wrap {
@@ -2098,6 +2092,27 @@
   <h3>Catalog of Observed Comments</h3>
   <div class="comment-grid">
     <div class="comment-card flagged">
+      <div class="comment-text">"Our loved ones deserve a place of dignity, peace, and respect where families can come to remember, pray, and reflect. A cemetery is not just land—it is a sacred space that connects generations and honors those who came before us. Supporting Crescent Gardens Cemetery means supporting our..."</div>
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
+        <div class="comment-name">Nisar (×2)</div>
+        <div class="comment-flag">⚠ Exact duplicate submission + same template as Roohma — identical text submitted twice under same name</div>
+      </div>
+    </div>
+    <div class="comment-card flagged">
+      <div class="comment-text">"This will help the community"</div>
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
+        <div class="comment-name">Abdul (×2)</div>
+        <div class="comment-flag">⚠ Exact duplicate submission — identical text submitted twice under same name</div>
+      </div>
+    </div>
+    <div class="comment-card flagged">
+      <div class="comment-text">"Whenever we visit my husband gravesite, our children love that they're sending prayers to everyone in the garden. Allah Taalah give them Maafira 🙏"</div>
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
+        <div class="comment-name">TASNEEM</div>
+        <div class="comment-flag">⚠ Near-duplicate of Rana's entry — same sentence structure, "husband" swapped for "father-in-law" — template variant</div>
+      </div>
+    </div>
+    <div class="comment-card flagged">
       <div class="comment-text">"This is Ching taw"</div>
       <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
         <div class="comment-name">Amar</div>
@@ -2216,6 +2231,34 @@
         <div class="comment-flag" style="color:var(--amber);">Mobilization language — not a personal statement</div>
       </div>
     </div>
+    <div class="comment-card suspicious">
+      <div class="comment-text">"This area is ideal for the location of a cemetery. All the environmental concerns have been addressed."</div>
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
+        <div class="comment-name">Syed</div>
+        <div class="comment-flag" style="color:var(--amber);">False factual assertion — environmental concerns have not been resolved per the official record; contradicts evidence in the public docket</div>
+      </div>
+    </div>
+    <div class="comment-card suspicious">
+      <div class="comment-text">"Our loved ones need a place we're there is peace and the family can attend"</div>
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
+        <div class="comment-name">Syed</div>
+        <div class="comment-flag" style="color:var(--amber);">Grammar error ("we're" for "where"); garbled variant also visible ("Our loved d oness...") — copy-paste/autocorrect artifact; same account appears multiple times across screenshots</div>
+      </div>
+    </div>
+    <div class="comment-card suspicious">
+      <div class="comment-text">"This isn't just about land—it's about dignity and respect. Families deserve the right to bury their loved ones according to their faith without traveling hours or facing limited options. Crescent Gardens Cemetery provides that—honoring religious freedom, cultural traditions, and basic human decency. If..."</div>
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
+        <div class="comment-name">Carlos</div>
+        <div class="comment-flag" style="color:var(--amber);">Non-Muslim name using Muslim faith-specific template language — same template structure as other entries; suggests template distributed beyond the immediate community</div>
+      </div>
+    </div>
+    <div class="comment-card suspicious">
+      <div class="comment-text">"Our community is expanding and need to get the place which is our right and we do hope n pray for all who help us achieve the goal for a cemetery to be allocated. As we live in a community shared by all colors in our respective neighborhood So is the grave also."</div>
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
+        <div class="comment-name">Yahya</div>
+        <div class="comment-flag" style="color:var(--amber);">Mobilization framing — "our right," campaign-style advocacy language rather than personal statement; grammatically fragmented</div>
+      </div>
+    </div>
     <div class="comment-card">
       <div class="comment-text">"This much needed for this area Muslims"</div>
       <div class="comment-name">Mustafa</div>
@@ -2271,6 +2314,14 @@
     <div class="comment-card">
       <div class="comment-text">"Everyone deserves a place to hold and respect their deceased loved ones. Care and love should not be a matter of money and should not be taken away from your community by preventing this from being built."</div>
       <div class="comment-name">Noel</div>
+    </div>
+    <div class="comment-card">
+      <div class="comment-text">"We need it"</div>
+      <div class="comment-name">Umair</div>
+    </div>
+    <div class="comment-card">
+      <div class="comment-text">"We need this"</div>
+      <div class="comment-name">Marwa</div>
     </div>
   </div>
 
