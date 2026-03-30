@@ -575,10 +575,19 @@ function showTooltip(e, d) {
 }
 
 function moveTooltip(e) {
+  const tipW = Math.min(280, window.innerWidth - 16);
+  const tipH = 200;
+  tooltip.style.maxWidth = tipW + "px";
+
   let x = e.clientX + 16;
   let y = e.clientY + 16;
-  if (x + 300 > window.innerWidth) x = e.clientX - 300;
-  if (y + 180 > window.innerHeight) y = e.clientY - 160;
+
+  if (x + tipW > window.innerWidth - 8) x = e.clientX - tipW - 8;
+  if (x < 8) x = 8;
+
+  if (y + tipH > window.innerHeight - 8) y = e.clientY - tipH - 8;
+  if (y < 60) y = 60;
+
   tooltip.style.left = x + "px";
   tooltip.style.top  = y + "px";
 }
