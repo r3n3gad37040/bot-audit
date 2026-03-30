@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ghost Protocol — Network Intelligence Map</title>
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #0a0e1a;
+    color: #e0e6f0;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    overflow: hidden;
+    height: 100vh;
+  }
+
+  #header {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 52px;
+    background: rgba(10,14,26,0.95);
+    border-bottom: 1px solid #1e2d4a;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    z-index: 100;
+    gap: 16px;
+  }
+
+  #header .logo {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #4a7fc1;
+    font-weight: 600;
+  }
+
+  #header .title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #c8d8f0;
+  }
+
+  #header .subtitle {
+    font-size: 11px;
+    color: #5a7090;
+    margin-left: auto;
+  }
+
+  #canvas {
+    position: fixed;
+    top: 52px; left: 0; right: 0; bottom: 0;
+  }
+
+  #legend {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background: rgba(10,14,26,0.92);
+    border: 1px solid #1e2d4a;
+    border-radius: 8px;
+    padding: 14px 18px;
+    z-index: 100;
+    min-width: 200px;
+  }
+
+  #legend h4 {
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #4a7fc1;
+    margin-bottom: 10px;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+    font-size: 12px;
+    color: #a0b8d0;
+  }
+
+  .legend-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .legend-line {
+    width: 24px;
+    height: 2px;
+    flex-shrink: 0;
+    border-radius: 1px;
+  }
+
+  .legend-section {
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #3a5070;
+    margin: 10px 0 6px;
+  }
+
+  #tooltip {
+    position: fixed;
+    background: rgba(10,14,26,0.97);
+    border: 1px solid #2a4060;
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 12px;
+    max-width: 280px;
+    pointer-events: none;
+    z-index: 200;
+    display: none;
+    line-height: 1.6;
+  }
+
+  #tooltip .tt-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #c8d8f0;
+    margin-bottom: 4px;
+  }
+
+  #tooltip .tt-type {
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  #tooltip .tt-desc {
+    color: #8aabcc;
+    font-size: 11px;
+  }
+
+  #controls {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    z-index: 100;
+  }
+
+  .ctrl-btn {
+    width: 36px;
+    height: 36px;
+    background: rgba(10,14,26,0.92);
+    border: 1px solid #1e2d4a;
+    border-radius: 6px;
+    color: #a0b8d0;
+    font-size: 18px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s;
+  }
+
+  .ctrl-btn:hover {
+    background: #1a2a40;
+    color: #e0e6f0;
+    border-color: #2a5080;
+  }
+
+  .link-label {
+    font-size: 9px;
+    fill: #3a5070;
+    pointer-events: none;
+    text-anchor: middle;
+  }
+
+  #stats {
+    position: fixed;
+    top: 62px;
+    right: 20px;
+    font-size: 10px;
+    color: #3a5070;
+    letter-spacing: 1px;
+    z-index: 100;
+  }
+
+  svg text {
+    user-select: none;
+  }
+</style>
+</head>
+<body>
+
+<div id="header">
+  <div class="logo">Ghost Protocol</div>
+  <div class="title">Intelligence Network Map — CUP230002 / Crescent Gardens</div>
+  <div class="subtitle">Scroll to zoom · Drag to pan · Hover nodes for details · Compiled 2026-03-30</div>
+</div>
+
+<div id="canvas"></div>
+
+<div id="legend">
+  <h4>Node Types</h4>
+  <div class="legend-item"><div class="legend-dot" style="background:#5b9cf6"></div>Person</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#f6a35b"></div>Islamic Organization</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#5bf6a3"></div>Government / Planning</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#f65b5b"></div>Project / Target</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#c45bf6"></div>Federal / MB Network</div>
+  <div class="legend-section">Edge Types</div>
+  <div class="legend-item"><div class="legend-line" style="background:#e05050"></div>Control / Leadership</div>
+  <div class="legend-item"><div class="legend-line" style="background:#f6a35b"></div>Membership / Affiliation</div>
+  <div class="legend-item"><div class="legend-line" style="background:#5b9cf6"></div>Employment / Business</div>
+  <div class="legend-item"><div class="legend-line" style="background:#5bf6a3"></div>Government / Appointed</div>
+  <div class="legend-item"><div class="legend-line" style="background:#c45bf6"></div>MB Network Connection</div>
+  <div class="legend-item"><div class="legend-line" style="background:#888" style="border-style:dashed"></div>Suspected / Unconfirmed</div>
+</div>
+
+<div id="tooltip">
+  <div class="tt-title" id="tt-title"></div>
+  <div class="tt-type" id="tt-type"></div>
+  <div class="tt-desc" id="tt-desc"></div>
+</div>
+
+<div id="controls">
+  <button class="ctrl-btn" onclick="zoomIn()">+</button>
+  <button class="ctrl-btn" onclick="zoomOut()">−</button>
+  <button class="ctrl-btn" onclick="resetZoom()" title="Reset">⌂</button>
+</div>
+
+<div id="stats"></div>
+
+<script>
+const WIDTH = window.innerWidth;
+const HEIGHT = window.innerHeight - 52;
+
+// ─── NODE DEFINITIONS ────────────────────────────────────────────────────────
+// groups: person | islamic | gov | project | federal
+const nodes = [
+  // SIDDIQUI FAMILY
+  { id: "siddiqui",  label: "Mohammad Shoaib\nSiddiqui",   group: "person",  r: 22,
+    typeLabel: "PRIMARY SUBJECT — PERSON",
+    desc: "Chairman, ICR Board of Trustees (2023–2026). CEO/President/RMO of Inland Engineers & Associates Inc. Active CA General Building License #891498. BOT contact: bot@masjidriverside.org" },
+  { id: "daulat",   label: "Daulat Shafiq\nSiddiqui",      group: "person",  r: 14,
+    typeLabel: "PERSON",
+    desc: "Secretary / CFO / Director, Inland Engineers. Full name confirmed via BBB + BuildZoom. Business co-officer with Mohammad Shoaib Siddiqui." },
+  { id: "asif",     label: "Asif Siddiqui",                group: "person",  r: 14,
+    typeLabel: "PERSON",
+    desc: "ICR Board Member + Chair of Cemetery Committee. Siddiqui family member. Controls ICR's formal cemetery partnership and burial referral process." },
+  { id: "munawar",  label: "Munawar Siddiqui",             group: "person",  r: 12,
+    typeLabel: "PERSON",
+    desc: "Chair, ICR Youth/Education Committee. Siddiqui family member." },
+  { id: "anum",     label: "Anum Siddiqui",                group: "person",  r: 12,
+    typeLabel: "PERSON",
+    desc: "Chair, ICR Women's Committee. Siddiqui family member." },
+  { id: "saad",     label: "Saad Siddiqui",                group: "person",  r: 11,
+    typeLabel: "PERSON",
+    desc: "Employee, Inland Engineers. UC Riverside engineering graduate. Siddiqui family member." },
+
+  // SHURA COUNCIL LEADERSHIP
+  { id: "shakeel",  label: "Shakeel Syed",                 group: "person",  r: 20,
+    typeLabel: "PERSON — KEY CONNECTOR",
+    desc: "Shura Council Executive Director (2013–2025 approx). MMCC Secretary (2013–2022). CAIR-LA: Founding Member + former President. CAIR-CA: former Chair. Central node connecting CAIR, MMCC, and ICR." },
+  { id: "nassimi",  label: "Masoud Nassimi",               group: "person",  r: 16,
+    typeLabel: "PERSON",
+    desc: "Shura Council Interim Executive Director (Feb 5, 2026–present). NAIT Board Member. Also boards: Masjid Al-Hedayah, Orange Crescent School, Islamic Center of South Bay." },
+
+  // MMCC CONNECTIONS
+  { id: "faiz",     label: "Hafiz Faiz Shah",              group: "person",  r: 15,
+    typeLabel: "PERSON",
+    desc: "Imam/Director of Ar-Rahman Islamic Center (Fontana, CA). MMCC Director (2013–2024). His mosque was built by Inland Engineers (2008–2010). Critical link between Inland Engineers and MMCC." },
+
+  // PLANNING OFFICIALS
+  { id: "khiar",    label: "Mussa Khiar",                  group: "gov",     r: 15,
+    typeLabel: "GOVERNMENT — PLANNING COMMISSIONER",
+    desc: "Riverside County Planning Commission, District 1 (Vice-Chair). Term: Oct 2024–Jun 2025. Appointed by Supervisor Kevin Jeffries. Owner, TeamLogic IT Riverside. Name consistent with Somali/East African Muslim heritage. No public recusal on record for CUP230002." },
+  { id: "mason",    label: "Krista Mason",                 group: "gov",     r: 14,
+    typeLabel: "GOVERNMENT — PRINCIPAL PLANNER",
+    desc: "Principal Planner, Riverside County Planning Dept. Lead planner on CUP230002. Authored the MND (Mitigated Negative Declaration) — the key decision that classified the project as low-impact, avoiding a full EIR. kmason@rivco.org / 951-955-1722." },
+  { id: "jeffries", label: "Kevin Jeffries",               group: "gov",     r: 13,
+    typeLabel: "GOVERNMENT — SUPERVISOR",
+    desc: "Riverside County Supervisor, District 1 (2012–Jan 6, 2025). Appointed Mussa Khiar to Planning Commission (Oct 2024). District 1 covers Mead Valley/Meadowbrook project site. No documented MMCC/ICR/CAIR connections found." },
+  { id: "medina",   label: "Jose Medina",                  group: "gov",     r: 11,
+    typeLabel: "GOVERNMENT — SUPERVISOR",
+    desc: "Riverside County Supervisor, District 1 (Jan 6, 2025–present). Replaced Kevin Jeffries. Former CA Assembly member, 35-yr educator. No documented Muslim community connections found." },
+  { id: "harmoush", label: "Imam Mahmoud\nHarmoush",       group: "person",  r: 12,
+    typeLabel: "PERSON",
+    desc: "ICR Director (imam/religious director). 2017 antisemitism controversy — made remarks alleged as antisemitic; ICR defended him. He claimed 'misinterpretation.' Currently still serving as ICR Director." },
+
+  // ORGANIZATIONS
+  { id: "inland",   label: "Inland Engineers\n& Associates",  group: "islamic", r: 18,
+    typeLabel: "ORGANIZATION — CONSTRUCTION",
+    desc: "Siddiqui's company. CA Entity #2807910. DBA: Inland Constructors and Builders. License #891498 (Active General Building). BuildZoom score: 96 (top 20% CA contractors). 20+ years in business. Previously built Ar-Rahman Islamic Center." },
+  { id: "icr",      label: "Islamic Center\nof Riverside",    group: "islamic", r: 22,
+    typeLabel: "ORGANIZATION — MOSQUE",
+    desc: "Islamic Center of Riverside (ICR). 1038 W Linden St, Riverside, CA 92507. Founded 1979. 1,000+ weekly Friday attendance. Registered as: Masjed of Riverside Inc (EIN 95-3451370). IRS classification: CHURCH — zero 990 filings, funding completely opaque. Shura Council member." },
+  { id: "mmcc",     label: "MMCC",                            group: "islamic", r: 20,
+    typeLabel: "ORGANIZATION — CEMETERY",
+    desc: "Muslim Mortuary & Cemetery Committee. EIN 95-4484132. Founded 1991. Applicant for Crescent Gardens Cemetery (CUP230002). Claims 501(c)(3) but IRS classifies as 501(c)(13) — donations NOT tax-deductible. 2020 revenue spike: $77K → $1.5M (19×, unexplained). Shura Council member." },
+  { id: "shura",    label: "Islamic Shura\nCouncil SoCal",    group: "islamic", r: 20,
+    typeLabel: "ORGANIZATION — UMBRELLA BODY",
+    desc: "Islamic Shura Council of Southern California. Regional umbrella body for SoCal Muslim institutions. Both ICR and MMCC are members. Historically led by CAIR/NAIT-connected individuals (Shakeel Syed → Masoud Nassimi)." },
+  { id: "arrahman", label: "Ar-Rahman\nIslamic Center",       group: "islamic", r: 13,
+    typeLabel: "ORGANIZATION — MOSQUE",
+    desc: "7641 Sierra Ave, Fontana, CA. Built by Inland Engineers (2008–2010, 5 building permits confirmed). Imam Hafiz Faiz Shah — who also served as MMCC Director (2013–2024). This is the Inland Engineers → MMCC bridge." },
+  { id: "cair_la",  label: "CAIR-LA",                         group: "federal", r: 15,
+    typeLabel: "ORGANIZATION — CAIR",
+    desc: "CAIR Los Angeles chapter. Shakeel Syed: founding member and former President. Named unindicted co-conspirator in 2008 Holy Land Foundation federal trial — largest terrorism financing prosecution in US history." },
+  { id: "cair_ca",  label: "CAIR-CA",                         group: "federal", r: 13,
+    typeLabel: "ORGANIZATION — CAIR",
+    desc: "CAIR California (state chapter). Shakeel Syed: former Chair. Part of national CAIR network named in 2008 Holy Land Foundation proceedings." },
+  { id: "nait",     label: "NAIT",                            group: "federal", r: 15,
+    typeLabel: "ORGANIZATION — FEDERAL FLAG",
+    desc: "North American Islamic Trust. Property-holding arm of ISNA (Islamic Society of North America). Named unindicted co-conspirator, 2008 Holy Land Foundation federal trial. Masoud Nassimi (current Shura Council interim ED) is a NAIT board member." },
+  { id: "isna",     label: "ISNA",                            group: "federal", r: 13,
+    typeLabel: "ORGANIZATION — FEDERAL FLAG",
+    desc: "Islamic Society of North America. Named unindicted co-conspirator, 2008 Holy Land Foundation federal trial. Established documented organizational connections to Muslim Brotherhood network per federal court findings." },
+
+  // PROJECT
+  { id: "crescent", label: "Crescent Gardens\nCemetery\nCUP230002",  group: "project", r: 22,
+    typeLabel: "PROJECT — ACTIVE CASE",
+    desc: "84.99-acre site, end of Garfield Road, Mead Valley, unincorporated Riverside County (District 1). 20,000 burial plots, chapel, ceremonial cleansing facility, caretaker residence. 15-year phased build. MMCC applicant. MND filed Aug 2025. No hearing date set as of Mar 2026. Inland Engineers = viable construction contractor." },
+
+  // PLANNING COMMISSION
+  { id: "planning", label: "Riverside County\nPlanning Commission", group: "gov", r: 16,
+    typeLabel: "GOVERNMENT — PLANNING COMMISSION",
+    desc: "Riverside County Planning Commission. Five commissioners, one per supervisorial district. CUP230002 pending hearing — no date set as of Mar 2026. Mussa Khiar (D1) served Oct 2024–Jun 2025 during MND preparation window." },
+];
+
+// ─── LINK DEFINITIONS ────────────────────────────────────────────────────────
+// types: control | member | employ | gov | mb | suspected
+const links = [
+  // SIDDIQUI FAMILY → INLAND ENGINEERS
+  { source:"siddiqui", target:"inland",   label:"CEO / President / RMO",        type:"employ"    },
+  { source:"daulat",   target:"inland",   label:"Secretary / CFO",              type:"employ"    },
+  { source:"saad",     target:"inland",   label:"Employee",                     type:"employ"    },
+
+  // SIDDIQUI FAMILY → ICR
+  { source:"siddiqui", target:"icr",      label:"Chairman, Board of Trustees",  type:"control"   },
+  { source:"asif",     target:"icr",      label:"Board + Cemetery Cmt. Chair",  type:"control"   },
+  { source:"munawar",  target:"icr",      label:"Youth Committee Chair",        type:"member"    },
+  { source:"anum",     target:"icr",      label:"Women's Committee Chair",      type:"member"    },
+  { source:"harmoush", target:"icr",      label:"Director (Imam)",              type:"control"   },
+
+  // ICR ↔ MMCC
+  { source:"icr",      target:"mmcc",     label:"Cemetery Partnership",         type:"member"    },
+
+  // SHURA COUNCIL MEMBERSHIPS
+  { source:"icr",      target:"shura",    label:"Member",                       type:"member"    },
+  { source:"mmcc",     target:"shura",    label:"Member",                       type:"member"    },
+
+  // SHAKEEL SYED CONNECTIONS
+  { source:"shakeel",  target:"shura",    label:"Executive Director 2013–2025", type:"control"   },
+  { source:"shakeel",  target:"mmcc",     label:"Secretary 2013–2022",          type:"control"   },
+  { source:"shakeel",  target:"cair_la",  label:"Founding Member + President",  type:"control"   },
+  { source:"shakeel",  target:"cair_ca",  label:"Former Chair",                 type:"control"   },
+
+  // MASOUD NASSIMI CONNECTIONS
+  { source:"nassimi",  target:"shura",    label:"Interim ED (Feb 2026)",        type:"control"   },
+  { source:"nassimi",  target:"nait",     label:"Board Member",                 type:"member"    },
+
+  // MB NETWORK
+  { source:"nait",     target:"isna",     label:"Property arm of",              type:"mb"        },
+  { source:"cair_la",  target:"cair_ca",  label:"State chapter",                type:"member"    },
+
+  // FAIZ SHAH — KEY BRIDGE
+  { source:"faiz",     target:"arrahman", label:"Imam / Director",              type:"control"   },
+  { source:"faiz",     target:"mmcc",     label:"MMCC Director 2013–2024",      type:"control"   },
+  { source:"inland",   target:"arrahman", label:"Built 2008–2010",              type:"employ"    },
+
+  // MMCC → PROJECT
+  { source:"mmcc",     target:"crescent", label:"Applicant / Operator",         type:"control"   },
+
+  // GOVERNMENT / PLANNING
+  { source:"jeffries", target:"khiar",    label:"Appointed Oct 2024",           type:"gov"       },
+  { source:"medina",   target:"planning", label:"Replaced Khiar's slot",        type:"gov"       },
+  { source:"khiar",    target:"planning", label:"Vice-Chair Oct 2024–Jun 2025", type:"gov"       },
+  { source:"planning", target:"crescent", label:"Pending Hearing",              type:"gov"       },
+  { source:"mason",    target:"crescent", label:"Principal Planner / MND Author",type:"gov"      },
+
+  // CONFLICT OF INTEREST (suspected)
+  { source:"khiar",    target:"crescent", label:"No recusal on record ⚠️",      type:"suspected" },
+
+  // FINANCIAL MOTIVE (suspected)
+  { source:"inland",   target:"crescent", label:"Viable construction bidder",   type:"suspected" },
+];
+
+// ─── COLOR MAPS ──────────────────────────────────────────────────────────────
+const nodeColor = {
+  person:  "#5b9cf6",
+  islamic: "#f6a35b",
+  gov:     "#5bf6a3",
+  project: "#f65b5b",
+  federal: "#c45bf6",
+};
+
+const nodeStroke = {
+  person:  "#3a7cd4",
+  islamic: "#d48234",
+  gov:     "#34d48a",
+  project: "#d43a3a",
+  federal: "#a234d4",
+};
+
+const linkColor = {
+  control:   "#e05050",
+  member:    "#f6a35b",
+  employ:    "#5b9cf6",
+  gov:       "#5bf6a3",
+  mb:        "#c45bf6",
+  suspected: "#505870",
+};
+
+// ─── SVG SETUP ───────────────────────────────────────────────────────────────
+const svg = d3.select("#canvas")
+  .append("svg")
+  .attr("width", WIDTH)
+  .attr("height", HEIGHT);
+
+const zoomG = svg.append("g").attr("class", "zoom-group");
+
+const zoom = d3.zoom()
+  .scaleExtent([0.15, 4])
+  .on("zoom", e => zoomG.attr("transform", e.transform));
+
+svg.call(zoom);
+
+// Arrow markers
+const defs = svg.append("defs");
+
+Object.entries(linkColor).forEach(([type, color]) => {
+  defs.append("marker")
+    .attr("id", `arrow-${type}`)
+    .attr("viewBox", "0 -5 10 10")
+    .attr("refX", 20)
+    .attr("refY", 0)
+    .attr("markerWidth", 6)
+    .attr("markerHeight", 6)
+    .attr("orient", "auto")
+    .append("path")
+    .attr("d", "M0,-5L10,0L0,5")
+    .attr("fill", color)
+    .attr("opacity", 0.7);
+});
+
+// ─── FORCE SIMULATION ────────────────────────────────────────────────────────
+const simulation = d3.forceSimulation(nodes)
+  .force("link", d3.forceLink(links).id(d => d.id).distance(d => {
+    // vary distance by node size
+    const s = d.source.r || 12;
+    const t = d.target.r || 12;
+    return 80 + s + t + (d.type === "suspected" ? 20 : 0);
+  }).strength(0.4))
+  .force("charge", d3.forceManyBody().strength(d => -400 - d.r * 8))
+  .force("center", d3.forceCenter(WIDTH / 2, HEIGHT / 2))
+  .force("collision", d3.forceCollide().radius(d => d.r + 18))
+  .force("x", d3.forceX(WIDTH / 2).strength(0.03))
+  .force("y", d3.forceY(HEIGHT / 2).strength(0.03));
+
+// ─── DRAW LINKS ──────────────────────────────────────────────────────────────
+const linkG = zoomG.append("g").attr("class", "links");
+
+const linkEl = linkG.selectAll("line")
+  .data(links)
+  .enter().append("line")
+  .attr("stroke", d => linkColor[d.type])
+  .attr("stroke-width", d => d.type === "control" ? 2 : 1.5)
+  .attr("stroke-opacity", d => d.type === "suspected" ? 0.4 : 0.65)
+  .attr("stroke-dasharray", d => d.type === "suspected" ? "5,4" : null)
+  .attr("marker-end", d => `url(#arrow-${d.type})`);
+
+// Link label groups
+const linkLabelG = zoomG.append("g").attr("class", "link-labels");
+
+const linkLabelEl = linkLabelG.selectAll("text")
+  .data(links)
+  .enter().append("text")
+  .attr("class", "link-label")
+  .text(d => d.label)
+  .attr("fill", d => linkColor[d.type])
+  .attr("opacity", 0.7);
+
+// ─── DRAW NODES ──────────────────────────────────────────────────────────────
+const nodeG = zoomG.append("g").attr("class", "nodes");
+
+const nodeEl = nodeG.selectAll("g")
+  .data(nodes)
+  .enter().append("g")
+  .attr("class", "node")
+  .style("cursor", "pointer")
+  .call(d3.drag()
+    .on("start", (e, d) => { if (!e.active) simulation.alphaTarget(0.3).restart(); d.fx=d.x; d.fy=d.y; })
+    .on("drag",  (e, d) => { d.fx=e.x; d.fy=e.y; })
+    .on("end",   (e, d) => { if (!e.active) simulation.alphaTarget(0); d.fx=null; d.fy=null; }))
+  .on("mouseover", showTooltip)
+  .on("mousemove", moveTooltip)
+  .on("mouseout",  hideTooltip);
+
+// Outer glow circle
+nodeEl.append("circle")
+  .attr("r", d => d.r + 6)
+  .attr("fill", d => nodeColor[d.group])
+  .attr("opacity", 0.08);
+
+// Main circle
+nodeEl.append("circle")
+  .attr("r", d => d.r)
+  .attr("fill", d => nodeColor[d.group])
+  .attr("fill-opacity", 0.18)
+  .attr("stroke", d => nodeStroke[d.group])
+  .attr("stroke-width", d => d.r >= 18 ? 2.5 : 1.8);
+
+// Node labels — handle multi-line with \n
+nodeEl.each(function(d) {
+  const g = d3.select(this);
+  const lines = d.label.split("\n");
+  const lineH = 13;
+  const totalH = (lines.length - 1) * lineH;
+  lines.forEach((line, i) => {
+    g.append("text")
+      .attr("text-anchor", "middle")
+      .attr("dy", i * lineH - totalH / 2 + (d.r >= 16 ? d.r + 14 : d.r + 12))
+      .attr("font-size", d.r >= 18 ? "11px" : "9.5px")
+      .attr("font-weight", d.r >= 18 ? "700" : "500")
+      .attr("fill", nodeColor[d.group])
+      .attr("opacity", 0.95)
+      .text(line);
+  });
+});
+
+// ─── SIMULATION TICK ─────────────────────────────────────────────────────────
+simulation.on("tick", () => {
+  linkEl
+    .attr("x1", d => d.source.x)
+    .attr("y1", d => d.source.y)
+    .attr("x2", d => {
+      const dx = d.target.x - d.source.x;
+      const dy = d.target.y - d.source.y;
+      const dist = Math.sqrt(dx*dx + dy*dy) || 1;
+      return d.target.x - (dx / dist) * (d.target.r + 4);
+    })
+    .attr("y2", d => {
+      const dx = d.target.x - d.source.x;
+      const dy = d.target.y - d.source.y;
+      const dist = Math.sqrt(dx*dx + dy*dy) || 1;
+      return d.target.y - (dy / dist) * (d.target.r + 4);
+    });
+
+  linkLabelEl
+    .attr("x", d => (d.source.x + d.target.x) / 2)
+    .attr("y", d => (d.source.y + d.target.y) / 2 - 4);
+
+  nodeEl.attr("transform", d => `translate(${d.x},${d.y})`);
+});
+
+// ─── TOOLTIP ────────────────────────────────────────────────────────────────
+const tooltip = document.getElementById("tooltip");
+const ttTitle = document.getElementById("tt-title");
+const ttType  = document.getElementById("tt-type");
+const ttDesc  = document.getElementById("tt-desc");
+
+const typeColors = {
+  person: "#5b9cf6", islamic: "#f6a35b", gov: "#5bf6a3",
+  project: "#f65b5b", federal: "#c45bf6"
+};
+
+function showTooltip(e, d) {
+  ttTitle.textContent = d.label.replace(/\n/g, " ");
+  ttType.textContent  = d.typeLabel;
+  ttType.style.color  = typeColors[d.group];
+  ttDesc.textContent  = d.desc;
+  tooltip.style.display = "block";
+  moveTooltip(e);
+}
+
+function moveTooltip(e) {
+  let x = e.clientX + 16;
+  let y = e.clientY + 16;
+  if (x + 300 > window.innerWidth) x = e.clientX - 300;
+  if (y + 180 > window.innerHeight) y = e.clientY - 160;
+  tooltip.style.left = x + "px";
+  tooltip.style.top  = y + "px";
+}
+
+function hideTooltip() {
+  tooltip.style.display = "none";
+}
+
+// ─── ZOOM CONTROLS ───────────────────────────────────────────────────────────
+function zoomIn()    { svg.transition().call(zoom.scaleBy, 1.4); }
+function zoomOut()   { svg.transition().call(zoom.scaleBy, 0.7); }
+function resetZoom() { svg.transition().call(zoom.transform, d3.zoomIdentity.translate(WIDTH/2, HEIGHT/2).scale(0.85).translate(-WIDTH/2, -HEIGHT/2)); }
+
+// Initial zoom
+setTimeout(() => {
+  svg.call(zoom.transform, d3.zoomIdentity.translate(WIDTH * 0.07, HEIGHT * 0.05).scale(0.88));
+}, 100);
+
+// Stats
+document.getElementById("stats").textContent =
+  `${nodes.length} nodes · ${links.length} edges`;
+</script>
+</body>
+</html>
