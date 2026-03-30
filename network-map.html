@@ -264,7 +264,7 @@ const nodes = [
   // SHURA COUNCIL LEADERSHIP
   { id: "shakeel",  label: "Shakeel Syed",                 group: "person",  r: 20,
     typeLabel: "PERSON — KEY CONNECTOR",
-    desc: "Shura Council Executive Director (2013–2025 approx). MMCC Secretary (2013–2022). CAIR-LA: Founding Member + former President. CAIR-CA: former Chair. Central node connecting CAIR, MMCC, and ICR." },
+    desc: "Shura Council Executive Director (2013–2025 approx). MMCC Secretary (2017–2022). CAIR-LA: Founding Member + former President. CAIR-CA: former Chair. Central node connecting CAIR, MMCC, and ICR." },
   { id: "nassimi",  label: "Masoud Nassimi",               group: "person",  r: 16,
     typeLabel: "PERSON",
     desc: "Shura Council Interim Executive Director (Feb 5, 2026–present). NAIT Board Member. Also boards: Masjid Al-Hedayah, Orange Crescent School, Islamic Center of South Bay." },
@@ -363,8 +363,8 @@ const links = [
   { source:"anum",     target:"icr",      label:"Women's Committee Chair",      type:"member"    },
   { source:"harmoush", target:"icr",      label:"Director (Imam)",              type:"control"   },
 
-  // ICR ↔ MMCC
-  { source:"icr",      target:"mmcc",     label:"Cemetery Partnership",         type:"member"    },
+  // ICR ↔ MMCC (unconfirmed — ICR FAQ says "partnered with a cemetery" but does not name MMCC)
+  { source:"icr",      target:"mmcc",     label:"Cemetery Partnership (unconfirmed)", type:"suspected" },
 
   // SHURA COUNCIL MEMBERSHIPS
   { source:"icr",      target:"shura",    label:"Member",                       type:"member"    },
@@ -372,8 +372,8 @@ const links = [
 
   // SHAKEEL SYED CONNECTIONS
   { source:"shakeel",  target:"shura",    label:"Executive Director 2013–2025", type:"control"   },
-  { source:"shakeel",  target:"mmcc",     label:"Secretary 2013–2022",          type:"control"   },
-  { source:"shakeel",  target:"cair_la",  label:"Founding Member + President",  type:"control"   },
+  { source:"shakeel",  target:"mmcc",     label:"Secretary 2017–2022",          type:"control"   },
+  { source:"shakeel",  target:"cair_la",  label:"Founding Member + former President", type:"control" },
   { source:"shakeel",  target:"cair_ca",  label:"Former Chair",                 type:"control"   },
 
   // MASOUD NASSIMI CONNECTIONS
@@ -407,7 +407,7 @@ const links = [
 
   // GOVERNMENT / PLANNING
   { source:"jeffries", target:"khiar",    label:"Appointed Oct 2024",           type:"gov"       },
-  { source:"medina",   target:"planning", label:"Replaced Khiar's slot",        type:"gov"       },
+  { source:"medina",   target:"planning", label:"Appointed Ariel Savage (Jul 2025)", type:"gov"  },
   { source:"khiar",    target:"planning", label:"Vice-Chair Oct 2024–Jun 2025", type:"gov"       },
   { source:"planning", target:"crescent", label:"Pending Hearing",              type:"gov"       },
   { source:"mason",    target:"crescent", label:"Principal Planner / MND Author",type:"gov"      },
