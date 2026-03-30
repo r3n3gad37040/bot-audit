@@ -208,13 +208,16 @@
   <div class="legend-item"><div class="legend-dot" style="background:#5bf6a3"></div>Government / Planning</div>
   <div class="legend-item"><div class="legend-dot" style="background:#f65b5b"></div>Project / Target</div>
   <div class="legend-item"><div class="legend-dot" style="background:#c45bf6"></div>Federal / MB Network</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#ff3a3a"></div>Convicted / FTO</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#ffb347"></div>Historical Event</div>
   <div class="legend-section">Edge Types</div>
   <div class="legend-item"><div class="legend-line" style="background:#e05050"></div>Control / Leadership</div>
   <div class="legend-item"><div class="legend-line" style="background:#f6a35b"></div>Membership / Affiliation</div>
   <div class="legend-item"><div class="legend-line" style="background:#5b9cf6"></div>Employment / Business</div>
   <div class="legend-item"><div class="legend-line" style="background:#5bf6a3"></div>Government / Appointed</div>
-  <div class="legend-item"><div class="legend-line" style="background:#c45bf6"></div>MB Network Connection</div>
-  <div class="legend-item"><div class="legend-line" style="background:#888" style="border-style:dashed"></div>Suspected / Unconfirmed</div>
+  <div class="legend-item"><div class="legend-line" style="background:#c45bf6"></div>MB / Federal Court Record</div>
+  <div class="legend-item"><div class="legend-line" style="background:#ffb347"></div>Historical Event Link</div>
+  <div class="legend-item"><div class="legend-line" style="background:#888"></div>Suspected / Unconfirmed</div>
 </div>
 
 <div id="tooltip">
@@ -236,7 +239,7 @@ const WIDTH = window.innerWidth;
 const HEIGHT = window.innerHeight - 52;
 
 // ─── NODE DEFINITIONS ────────────────────────────────────────────────────────
-// groups: person | islamic | gov | project | federal
+// groups: person | islamic | gov | project | federal | threat | event
 const nodes = [
   // SIDDIQUI FAMILY
   { id: "siddiqui",  label: "Mohammad Shoaib\nSiddiqui",   group: "person",  r: 22,
@@ -304,6 +307,9 @@ const nodes = [
   { id: "arrahman", label: "Ar-Rahman\nIslamic Center",       group: "islamic", r: 13,
     typeLabel: "ORGANIZATION — MOSQUE",
     desc: "7641 Sierra Ave, Fontana, CA. Built by Inland Engineers (2008–2010, 5 building permits confirmed). Imam Hafiz Faiz Shah — who also served as MMCC Director (2013–2024). This is the Inland Engineers → MMCC bridge." },
+  { id: "cair_nat", label: "CAIR National",                    group: "federal", r: 18,
+    typeLabel: "ORGANIZATION — CAIR NATIONAL",
+    desc: "Council on American-Islamic Relations (CAIR). National headquarters. Founded 1994. Named unindicted co-conspirator in 2008 Holy Land Foundation federal trial. Federal prosecutors identified CAIR as a member of the Palestine Committee — the US arm of the Muslim Brotherhood's Hamas support network. Parent org of CAIR-CA and CAIR-LA." },
   { id: "cair_la",  label: "CAIR-LA",                         group: "federal", r: 15,
     typeLabel: "ORGANIZATION — CAIR",
     desc: "CAIR Los Angeles chapter. Shakeel Syed: founding member and former President. Named unindicted co-conspirator in 2008 Holy Land Foundation federal trial — largest terrorism financing prosecution in US history." },
@@ -316,6 +322,20 @@ const nodes = [
   { id: "isna",     label: "ISNA",                            group: "federal", r: 13,
     typeLabel: "ORGANIZATION — FEDERAL FLAG",
     desc: "Islamic Society of North America. Named unindicted co-conspirator, 2008 Holy Land Foundation federal trial. Established documented organizational connections to Muslim Brotherhood network per federal court findings." },
+  { id: "mb",       label: "Muslim Brotherhood",              group: "federal", r: 17,
+    typeLabel: "NETWORK — MUSLIM BROTHERHOOD",
+    desc: "International Islamist organization. Per 2008 HLF federal trial: CAIR, HLF, NAIT, and ISNA were identified as having organizational connections to the MB's US network. Hamas is the MB's Palestinian branch. Federal court findings (US v. Holy Land Foundation, 2008) established these links through internal MB documents entered into evidence." },
+  { id: "hlf",      label: "Holy Land\nFoundation",           group: "threat",  r: 16,
+    typeLabel: "CONVICTED ORGANIZATION",
+    desc: "Holy Land Foundation for Relief and Development (HLF). Convicted 2008 in largest terrorism financing prosecution in US history. Funneled $12.4M to Hamas. Five leaders received sentences totaling 108 years. CAIR, NAIT, ISNA named as unindicted co-conspirators. Internal MB documents showed HLF was part of the Palestine Committee — the MB's Hamas support infrastructure in the US." },
+  { id: "hamas",    label: "Hamas",                           group: "threat",  r: 15,
+    typeLabel: "DESIGNATED FOREIGN TERRORIST ORGANIZATION",
+    desc: "Hamas (Harakat al-Muqawama al-Islamiyya). Designated Foreign Terrorist Organization by the US State Dept since 1997. Palestinian branch of the Muslim Brotherhood. Recipient of $12.4M funneled through HLF. Responsible for mass civilian casualties. HLF conviction (2008) established the US MB network's financial pipeline to Hamas." },
+
+  // HISTORICAL EVENTS
+  { id: "sba",      label: "San Bernardino\nAttack 2015",     group: "event",   r: 14,
+    typeLabel: "HISTORICAL EVENT — VERIFIED",
+    desc: "December 2, 2015. Syed Rizwan Farook and Tashfeen Malik killed 14 people and injured 22 at the Inland Regional Center, San Bernardino, CA. Farook was a longtime attendee of ICR (Islamic Center of Riverside) and held his wedding reception at ICR in 2014. He stopped attending in 2014 before the attack. Source: multiple major news outlets (LA Times, NY Times, etc.)" },
 
   // PROJECT
   { id: "crescent", label: "Crescent Gardens\nCemetery\nCUP230002",  group: "project", r: 22,
@@ -360,9 +380,22 @@ const links = [
   { source:"nassimi",  target:"shura",    label:"Interim ED (Feb 2026)",        type:"control"   },
   { source:"nassimi",  target:"nait",     label:"Board Member",                 type:"member"    },
 
-  // MB NETWORK
+  // CAIR HIERARCHY
+  { source:"cair_la",  target:"cair_nat", label:"LA chapter of",                type:"member"    },
+  { source:"cair_ca",  target:"cair_nat", label:"CA state chapter of",          type:"member"    },
+
+  // MB NETWORK — HLF TRIAL CONNECTIONS (all verified by federal court record)
   { source:"nait",     target:"isna",     label:"Property arm of",              type:"mb"        },
-  { source:"cair_la",  target:"cair_ca",  label:"State chapter",                type:"member"    },
+  { source:"cair_nat", target:"hlf",      label:"Named unindicted co-conspirator (2008)", type:"mb" },
+  { source:"nait",     target:"hlf",      label:"Named unindicted co-conspirator (2008)", type:"mb" },
+  { source:"isna",     target:"hlf",      label:"Named unindicted co-conspirator (2008)", type:"mb" },
+  { source:"hlf",      target:"hamas",    label:"Convicted: funneled $12.4M (2008)",      type:"mb" },
+  { source:"hamas",    target:"mb",       label:"Palestinian branch of MB",               type:"mb" },
+  { source:"cair_nat", target:"mb",       label:"Palestine Committee — US MB network",    type:"mb" },
+  { source:"nait",     target:"mb",       label:"Organizational connection (federal court)", type:"mb" },
+
+  // HISTORICAL EVENT CONNECTIONS
+  { source:"icr",      target:"sba",      label:"Farook attended ICR; wedding held here", type:"event" },
 
   // FAIZ SHAH — KEY BRIDGE
   { source:"faiz",     target:"arrahman", label:"Imam / Director",              type:"control"   },
@@ -393,6 +426,8 @@ const nodeColor = {
   gov:     "#5bf6a3",
   project: "#f65b5b",
   federal: "#c45bf6",
+  threat:  "#ff3a3a",
+  event:   "#ffb347",
 };
 
 const nodeStroke = {
@@ -401,6 +436,8 @@ const nodeStroke = {
   gov:     "#34d48a",
   project: "#d43a3a",
   federal: "#a234d4",
+  threat:  "#cc1010",
+  event:   "#cc8800",
 };
 
 const linkColor = {
@@ -410,6 +447,7 @@ const linkColor = {
   gov:       "#5bf6a3",
   mb:        "#c45bf6",
   suspected: "#505870",
+  event:     "#ffb347",
 };
 
 // ─── SVG SETUP ───────────────────────────────────────────────────────────────
@@ -562,7 +600,7 @@ const ttDesc  = document.getElementById("tt-desc");
 
 const typeColors = {
   person: "#5b9cf6", islamic: "#f6a35b", gov: "#5bf6a3",
-  project: "#f65b5b", federal: "#c45bf6"
+  project: "#f65b5b", federal: "#c45bf6", threat: "#ff3a3a", event: "#ffb347"
 };
 
 function showTooltip(e, d) {
@@ -608,7 +646,7 @@ setTimeout(() => {
 
 // Stats
 document.getElementById("stats").textContent =
-  `${nodes.length} nodes · ${links.length} edges`;
+  `${nodes.length} nodes · ${links.length} connections`;
 </script>
 </body>
 </html>
