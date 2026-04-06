@@ -265,7 +265,7 @@ const nodes = [
   // SHURA COUNCIL LEADERSHIP
   { id: "shakeel",  label: "Shakeel Syed",                 group: "person",  r: 20,
     typeLabel: "PERSON — KEY CONNECTOR",
-    desc: "Shura Council Executive Director (2013–2025 approx). MMCC Secretary (2017–2022). CAIR-LA: Founding Member + former President. CAIR-CA: former Chair. Central node connecting CAIR, MMCC, and ICR." },
+    desc: "Shura Council Executive Director (2013–2025 approx). MMCC Secretary (2017–2022). CAIR-LA: Founding Member + former President. CAIR-CA: former Chair. Current: Executive Director, South Asian Network (SAN). Board: ACLU, AFSC (Palestine solidarity), CLUE, Death Penalty Focus. Former ED: OCCORD (now Powerswitch Action). Volunteer prison chaplain. Triple overlap: CAIR/MB network + JI/Shura network + progressive civil society. Zero engineering credentials. Source: southasiannetwork.org/staff/shakeel-syed/" },
   { id: "nassimi",  label: "Masoud Nassimi",               group: "person",  r: 16,
     typeLabel: "PERSON",
     desc: "Shura Council Interim Executive Director (Feb 5, 2026–present). NAIT Board Member. Also boards: Masjid Al-Hedayah, Orange Crescent School, Islamic Center of South Bay." },
@@ -439,6 +439,15 @@ const nodes = [
   { id: "ismail_dadabhoy", label: "Ismail Dadabhoy",            group: "person",  r: 11,
     typeLabel: "PERSON — FORMER MMCC CHAIRMAN",
     desc: "Ismail Dadabhoy. Former Chairman of MMCC (Muslim Mortuary & Cemetery Committee). Dadabhoy surname connects to Owaiz Dadabhoy (current Islamic Shura Council Director). Multigenerational network continuity: the family helped found MMCC and retains representation on the regional umbrella body that oversees it." },
+
+  // ─── CIVIL SOCIETY COVER LAYER ───────────────────────────────────────────────
+  { id: "san",       label: "South Asian\nNetwork (SAN)",          group: "gov",     r: 15,
+    typeLabel: "ORGANIZATION — CIVIL SOCIETY / COVER LAYER",
+    desc: "South Asian Network (SAN). 18173 Pioneer Blvd., Artesia, CA 90701. Immigrant rights, minority health, gender-based violence advocacy. Shakeel Syed is Executive Director. CAIR is a listed SAN partner/ally — a closed loop: Syed runs SAN while SAN formally partners with the CAIR network he helped found. Funded by CA state agencies (CDSS, OCHCA), Bank of America, federal OVW grants. Source: southasiannetwork.org" },
+
+  { id: "afsc",      label: "AFSC\n(American Friends\nService Committee)", group: "gov", r: 13,
+    typeLabel: "ORGANIZATION — PALESTINE SOLIDARITY / CIVIL SOCIETY",
+    desc: "American Friends Service Committee (AFSC). Quaker organization. One of the most prominent pro-Palestinian advocacy organizations in the US: documented support for BDS (Boycott, Divest, Sanctions), opposition to US military aid to Israel, partnerships with Gaza-based organizations. Shakeel Syed sits on the AFSC board — bridging the CAIR/MB Hamas-support infrastructure directly into mainstream Quaker Palestine solidarity activism. The AFSC board seat is Syed's documented Palestine connection." },
 ];
 
 // ─── LINK DEFINITIONS ────────────────────────────────────────────────────────
@@ -555,6 +564,11 @@ const links = [
   { source:"farrukh_net",   target:"mcmc_nj",        label:"Hosted lectures here 2004–2006",      type:"event"     },
   { source:"farrukh_net",   target:"ji",             label:"JI Pakistan media mirror (2001)",      type:"ji"        },
   { source:"mcmc_nj",       target:"icna",           label:"ICNA-affiliated mosque",              type:"ji"        },
+
+  // ─── CIVIL SOCIETY COVER LAYER ───────────────────────────────────────────────
+  { source:"shakeel",       target:"san",            label:"Executive Director (current)",         type:"employ"    },
+  { source:"shakeel",       target:"afsc",           label:"Board Member",                         type:"member"    },
+  { source:"san",           target:"cair_nat",       label:"CAIR listed as SAN partner ⚠️",        type:"suspected" },
 ];
 
 // ─── COLOR MAPS ──────────────────────────────────────────────────────────────
