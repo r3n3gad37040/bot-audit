@@ -196,7 +196,7 @@
 <div id="header">
   <div class="logo">Ghost Protocol</div>
   <div class="title">Intelligence Network Map — CUP230002 / Crescent Gardens</div>
-  <div class="subtitle">Scroll to zoom · Drag to pan · Hover nodes for details · Compiled 2026-03-30</div>
+  <div class="subtitle">Scroll to zoom · Drag to pan · Hover nodes for details · Compiled 2026-04-05 · v2 — JI/ICNA/Saudi expanded</div>
 </div>
 
 <div id="canvas"></div>
@@ -216,6 +216,7 @@
   <div class="legend-item"><div class="legend-line" style="background:#5b9cf6"></div>Employment / Business</div>
   <div class="legend-item"><div class="legend-line" style="background:#5bf6a3"></div>Government / Appointed</div>
   <div class="legend-item"><div class="legend-line" style="background:#c45bf6"></div>MB / Federal Court Record</div>
+  <div class="legend-item"><div class="legend-line" style="background:#ffadd2"></div>JI / Pakistan Network</div>
   <div class="legend-item"><div class="legend-line" style="background:#ffb347"></div>Historical Event Link</div>
   <div class="legend-item"><div class="legend-line" style="background:#888"></div>Suspected / Unconfirmed</div>
 </div>
@@ -346,6 +347,98 @@ const nodes = [
   { id: "planning", label: "Riverside County\nPlanning Commission", group: "gov", r: 16,
     typeLabel: "GOVERNMENT — PLANNING COMMISSION",
     desc: "Riverside County Planning Commission. Five commissioners, one per supervisorial district. CUP230002 pending hearing — no date set as of Mar 2026. Mussa Khiar (D1) served Oct 2024–Jun 2025 during MND preparation window." },
+
+  // ─── IDEOLOGICAL ROOT ────────────────────────────────────────────────────────
+  { id: "ji",       label: "Jamaat-e-Islami\nPakistan",          group: "federal", r: 28,
+    typeLabel: "DESIGNATED NETWORK — IDEOLOGICAL ROOT",
+    desc: "Jamaat-e-Islami (JI), founded 1941 by Abul A'la Mawdudi. South Asian Islamist political movement. Core doctrine: replacement of secular governance with Islamic law through organized political action. Designated terrorist organization by UAE, Russia, and others. Parent ideology of ICNA, Muslim Brotherhood global affiliates, and dozens of US Islamic organizations. Al Khidmat Foundation is JI's official welfare arm." },
+
+  { id: "mawdudi",  label: "Abul A'la\nMawdudi",                 group: "person",  r: 20,
+    typeLabel: "PERSON — IDEOLOGICAL FOUNDER",
+    desc: "Abul A'la Mawdudi (1903–1979). Founder of Jamaat-e-Islami, 1941. Most influential Islamist political ideologue of the 20th century. Grandfather of Sophia Farooq (Cobb County GOP Chair candidate, 2025). His writings form the foundational ideology of ICNA and Muslim Brotherhood affiliates globally." },
+
+  // ─── ICNA / US INSTITUTIONAL ARM ────────────────────────────────────────────
+  { id: "icna",     label: "ICNA",                               group: "federal", r: 24,
+    typeLabel: "ORGANIZATION — JI US ARM",
+    desc: "Islamic Circle of North America (ICNA). Founded 1968 from Muslim Student Association members with roots in Jamaat-e-Islami Pakistan. ICNA's own 1996 publication stated it uses 'organizational development methodology of Maulana Mawdudi and Jamaat-e-Islami Pakistan.' Logo identical to JI student wing logo. Partners with Al Khidmat Foundation (JI's welfare arm, Hamas funder). HHRD is ICNA's sister relief org. USAID IG launched formal investigation into HHRD for terror financing." },
+
+  { id: "hhrd",     label: "HHRD",                               group: "federal", r: 18,
+    typeLabel: "ORGANIZATION — ICNA RELIEF ARM",
+    desc: "Helping Hand for Relief and Development. ICNA's 'sister organization.' Shares ICNA's logo. Raised ~$40M/yr by 2015. Received $1.3M DHS grant (2016). Included in USAID Combined Federal Campaign. CEO: Dr. Farrukh Raza (openly JI-affiliated). Dec 2017: co-sponsored Pakistan conference with Falah-e-Insaniat Foundation (FIF) — charitable arm of Lashkar-e-Taiba (Treasury-designated FTO, perpetrators of 2008 Mumbai attacks). USAID Inspector General launched formal investigation for terror financing." },
+
+  { id: "farrukh_raza", label: "Dr. Farrukh Raza",              group: "person",  r: 15,
+    typeLabel: "PERSON — HHRD CEO",
+    desc: "CEO of HHRD (ICNA's relief arm). Openly affiliates with Jamaat-e-Islami. Met JI's deputy leader Khurshid Ahmad at Al-Khidmat organized meetings in Pakistan. Runs the $40M/yr relief organization that received DHS grants and co-sponsored a conference with a Lashkar-e-Taiba charity wing." },
+
+  { id: "alkhidmat", label: "Al Khidmat\nFoundation",           group: "threat",  r: 16,
+    typeLabel: "ORGANIZATION — JI WELFARE ARM / HAMAS FUNDER",
+    desc: "Al Khidmat Foundation. Official welfare arm of Jamaat-e-Islami Pakistan. Documented by Middle East Forum as funding Hamas. Partners with ICNA's HHRD. Sophia Farooq's uncle hosted by Al Khidmat directly. HHRD co-sponsors conferences and maintains active partnership relationship." },
+
+  // ─── FRONT 2: GEORGIA ────────────────────────────────────────────────────────
+  { id: "syed_farooq", label: "Dr. Syed Ahmad\nFarooq",         group: "person",  r: 16,
+    typeLabel: "PERSON — ICNA FIRST ELECTED SECRETARY",
+    desc: "Dr. Syed Ahmad Farooq. First elected Secretary of ICNA. Sophia Farooq's father. Son-in-law (by lineage) of Abul A'la Mawdudi — Mawdudi is his father-in-law. His role as ICNA's founding Secretary establishes direct operational continuity between JI Pakistan's ideological network and the US institutional arm." },
+
+  { id: "sophia",   label: "Sophia Farooq",                     group: "person",  r: 20,
+    typeLabel: "PERSON — GEORGIA FRONT OPERATIVE",
+    desc: "Sophia Farooq. Candidate, Cobb County Republican Party Chairmanship, March 2025. Granddaughter of Mawdudi (JI founder). Daughter of ICNA's first elected Secretary. Endorsed by Veterans for America First (L-Strategies trade name) as 'MAGA candidate.' Fabricated credentials: claimed Delta Airlines executive and Walmart executive — ZERO verifiable records. Actual confirmed role: VP Marketing, NetSpend/Skylight — company hit with $53M FTC settlement (2016) for deceiving 430,000+ low-income consumers. No LinkedIn profile. Appeal of convention results still pending." },
+
+  { id: "cobb_gop", label: "Cobb County GOP",                   group: "gov",     r: 15,
+    typeLabel: "GOVERNMENT — GEORGIA FRONT TARGET",
+    desc: "Cobb County Republican Party (Georgia). Sophia Farooq ran for Chair, March 2025 convention. Lost to Mary Clarice Hathaway. Filed appeal citing 'multiple issues with the convention.' Appeal pending as of April 2026. Endorsed by Cobb County Republican Assembly and Veterans for America First." },
+
+  // ─── LASHKAR-E-TAIBA THREAD ──────────────────────────────────────────────────
+  { id: "let",      label: "Lashkar-e-Taiba",                   group: "threat",  r: 15,
+    typeLabel: "DESIGNATED FOREIGN TERRORIST ORGANIZATION",
+    desc: "Lashkar-e-Taiba (LeT). US Treasury-designated Foreign Terrorist Organization. Perpetrators of the 2008 Mumbai attacks (166 killed). FIF (Falah-e-Insaniat Foundation) is LeT's charitable wing. HHRD co-sponsored a Dec 2017 Pakistan conference with FIF, establishing a documented operational link between ICNA's relief arm and a LeT affiliate." },
+
+  { id: "fif",      label: "Falah-e-Insaniat\nFoundation",      group: "threat",  r: 13,
+    typeLabel: "ORGANIZATION — LASHKAR-E-TAIBA CHARITY ARM",
+    desc: "Falah-e-Insaniat Foundation (FIF). Charitable wing of Lashkar-e-Taiba. HHRD (ICNA's relief arm) co-sponsored a December 2017 conference in Pakistan with FIF. This is the documented operational bridge between ICNA's charitable infrastructure and a US Treasury-designated terrorist organization." },
+
+  // ─── SAUDI THREAD ────────────────────────────────────────────────────────────
+  { id: "king_fahad", label: "King Fahad Mosque\n(Culver City)", group: "islamic", r: 14,
+    typeLabel: "ORGANIZATION — SAUDI-FUNDED MOSQUE",
+    desc: "King Fahad Mosque, Culver City, CA. Funded by Saudi King Fahad and Prince Abdulaziz bin Fahad ($2.16M–$8M). Managed by: Islamic Foundation of Shaikh Ibn Taymiyyah. FBI documented 'extremist-related activity both before and after September 11'; alleged money laundering to nonprofits affiliated with Usama Bin Ladin. Mosque imam Shaykh Fahad al-Thumairy: denied US re-entry May 2003 as possible terrorism connection. MMCC Director Rauf Patel is simultaneously a director here." },
+
+  { id: "rauf_patel", label: "Rauf Patel",                      group: "person",  r: 13,
+    typeLabel: "PERSON — DUAL BOARD MEMBER",
+    desc: "Rauf Patel. MMCC Director. Simultaneously a director of King Fahad Mosque (Culver City) — Saudi-funded mosque with FBI-documented extremism connections. His dual board positions directly link the Crescent Gardens Cemetery project to the Saudi/Wahhabist institutional network." },
+
+  { id: "hamid",    label: "Hamid Ul Haque",                    group: "person",  r: 14,
+    typeLabel: "PERSON — MMCC CHAIRMAN",
+    desc: "Hamid Ul Haque. Chairman of MMCC. Primary contact for Crescent Gardens Cemetery application (CUP230002). MMCC is listed 'c/o Hamid Ul Haque' in application. Appeared at Riverside County Planning Commission hearing April 1, 2026. Representatives under his organization responded 'It's no problem' when challenged on necroleachate groundwater contamination — consistent with non-engineering political operative." },
+
+  // ─── SHURA COUNCIL BOARD MEMBERS (BEYOND SHAKEEL/NASSIMI) ──────────────────
+  { id: "deana_helmy", label: "Dr. Deana Helmy",                group: "person",  r: 13,
+    typeLabel: "PERSON — SHURA COUNCIL CHAIR",
+    desc: "Dr. Deana Helmy. Chair, Islamic Shura Council of Southern California. Also affiliated with ICNA Relief SC. Her dual role at both the regional umbrella body and ICNA's relief arm confirms the Shura Council's deep integration with ICNA's national infrastructure." },
+
+  { id: "waqas_syed", label: "Waqas Syed",                      group: "person",  r: 13,
+    typeLabel: "PERSON — SHURA COUNCIL SECRETARY",
+    desc: "Waqas Syed. Secretary, Islamic Shura Council of Southern California. Also: ICNA SoCal and ICNA National Board member. His positions on both the regional Shura Council and ICNA's national board confirm that the Shura Council is structurally integrated into ICNA's national organizational apparatus." },
+
+  { id: "owaiz",    label: "Owaiz Dadabhoy",                    group: "person",  r: 12,
+    typeLabel: "PERSON — SHURA COUNCIL DIRECTOR",
+    desc: "Owaiz Dadabhoy. Director, Islamic Shura Council of Southern California. Dadabhoy surname = MMCC family name (Ismail Dadabhoy, former MMCC Chairman). Connecting the Shura Council's current directorship to MMCC's founding family." },
+
+  // ─── FARRUKH.NET DOMAIN NODE ────────────────────────────────────────────────
+  { id: "farrukh_net", label: "farrukh.net\n(2001)",            group: "event",   r: 11,
+    typeLabel: "DIGITAL ARTIFACT — JI NETWORK NODE",
+    desc: "farrukh.net domain (archived September 17, 2001). Confirmed via Wayback Machine as a direct mirror of Jamaat-e-Islami Pakistan's official web presence: JI official logo linking to jamaat.org, jipmedia.com (JI Pakistan Media) prominently displayed, Mawdudi's own audio lectures. 2001–2006: operated inside JI/ICNA US network, hosted Ramadan Dars-e-Quran lectures at MCMC Piscataway NJ (ICNA-affiliated mosque). Current owner (2020–present): Farrukh K. Pitafi, Pakistani journalist. easyhost.pk nameservers (Pakistan). Domain appears to have changed hands — likely two different 'Farrukhs.'" },
+
+  // ─── SAUDI / WAHHABIST STRUCTURAL BRIDGE ─────────────────────────────────────
+  { id: "ibn_taymiyyah", label: "Islamic Foundation\nof Ibn Taymiyyah", group: "threat", r: 17,
+    typeLabel: "ORGANIZATION — SAUDI STRUCTURAL BRIDGE ⚠️",
+    desc: "Islamic Foundation of Shaikh Ibn Taymiyyah. Saudi-funded umbrella organization. Manages BOTH King Fahad Mosque (Culver City — FBI-documented extremism, Saudi royal funding $2.16M–$8M) AND Islamic Center of Riverside (ICR, 1038 W Linden St, Riverside CA). THIS IS THE STRUCTURAL BRIDGE: the same foundation the FBI flagged for 9/11-era extremism and alleged Bin Ladin-affiliated money laundering is the legal operator of the mosque whose board chairman (Siddiqui) is running the Crescent Gardens Cemetery application." },
+
+  { id: "mcmc_nj",  label: "MCMC\nPiscataway NJ",                group: "islamic", r: 12,
+    typeLabel: "ORGANIZATION — JI/ICNA NETWORK NODE",
+    desc: "Muslim Center of Middlesex County (MCMC), Piscataway NJ. ICNA-affiliated mosque. Hosted Ramadan Dars-e-Quran lectures by Maulana Muhammad Yusuf Islahi (Jamaat-e-Islami affiliated scholar) distributed via farrukh.net (2004–2005). Direct hyperlink to mcmcnj.org on the archived 2006 farrukh.net page. Confirms farrukh.net was operating inside the live JI/ICNA US institutional network." },
+
+  { id: "ismail_dadabhoy", label: "Ismail Dadabhoy",            group: "person",  r: 11,
+    typeLabel: "PERSON — FORMER MMCC CHAIRMAN",
+    desc: "Ismail Dadabhoy. Former Chairman of MMCC (Muslim Mortuary & Cemetery Committee). Dadabhoy surname connects to Owaiz Dadabhoy (current Islamic Shura Council Director). Multigenerational network continuity: the family helped found MMCC and retains representation on the regional umbrella body that oversees it." },
 ];
 
 // ─── LINK DEFINITIONS ────────────────────────────────────────────────────────
@@ -417,6 +510,51 @@ const links = [
 
   // FINANCIAL MOTIVE (suspected)
   { source:"inland",   target:"crescent", label:"Viable construction bidder",   type:"suspected" },
+
+  // ─── JI ROOT LINEAGE ─────────────────────────────────────────────────────────
+  { source:"mawdudi",       target:"ji",            label:"Founder (1941)",                      type:"ji"        },
+  { source:"ji",            target:"icna",           label:"US institutional arm",                type:"ji"        },
+  { source:"ji",            target:"alkhidmat",      label:"Official welfare arm",                type:"ji"        },
+  { source:"mawdudi",       target:"syed_farooq",    label:"Father-in-law",                       type:"ji"        },
+  { source:"syed_farooq",   target:"icna",           label:"First elected Secretary",             type:"control"   },
+  { source:"syed_farooq",   target:"sophia",         label:"Father",                              type:"ji"        },
+  { source:"mawdudi",       target:"sophia",         label:"Grandfather",                         type:"ji"        },
+
+  // ─── ICNA / HHRD NETWORK ─────────────────────────────────────────────────────
+  { source:"icna",          target:"hhrd",           label:"Sister org / shares logo",            type:"ji"        },
+  { source:"icna",          target:"alkhidmat",      label:"Partnership / co-finances",           type:"ji"        },
+  { source:"icna",          target:"shura",          label:"Controls Chair + Secretary",          type:"ji"        },
+  { source:"farrukh_raza",  target:"hhrd",           label:"CEO",                                 type:"control"   },
+  { source:"farrukh_raza",  target:"alkhidmat",      label:"Met JI leadership at AK events",      type:"ji"        },
+  { source:"hhrd",          target:"alkhidmat",      label:"Active partnership",                  type:"ji"        },
+  { source:"hhrd",          target:"fif",            label:"Co-sponsored Dec 2017 conference",    type:"mb"        },
+  { source:"fif",           target:"let",            label:"Charitable arm of LeT",               type:"mb"        },
+
+  // ─── SHURA COUNCIL ← ICNA INTEGRATION ───────────────────────────────────────
+  { source:"deana_helmy",   target:"shura",          label:"Chair",                               type:"control"   },
+  { source:"deana_helmy",   target:"icna",           label:"ICNA Relief SC affiliate",            type:"ji"        },
+  { source:"waqas_syed",    target:"shura",          label:"Secretary",                           type:"control"   },
+  { source:"waqas_syed",    target:"icna",           label:"ICNA SoCal + National Board",         type:"ji"        },
+  { source:"owaiz",         target:"shura",          label:"Director",                            type:"control"   },
+  { source:"owaiz",         target:"ismail_dadabhoy",label:"Dadabhoy family continuity",          type:"suspected" },
+  { source:"ismail_dadabhoy",target:"mmcc",          label:"Former Chairman",                     type:"control"   },
+
+  // ─── MMCC BOARD ──────────────────────────────────────────────────────────────
+  { source:"hamid",         target:"mmcc",           label:"Chairman / CUP230002 applicant",      type:"control"   },
+  { source:"rauf_patel",    target:"mmcc",           label:"Director",                            type:"control"   },
+
+  // ─── GEORGIA FRONT ───────────────────────────────────────────────────────────
+  { source:"sophia",        target:"cobb_gop",       label:"Chair candidate Mar 2025",            type:"gov"       },
+
+  // ─── SAUDI / IBN TAYMIYYAH STRUCTURAL BRIDGE ─────────────────────────────────
+  { source:"ibn_taymiyyah", target:"king_fahad",     label:"Manages",                             type:"control"   },
+  { source:"ibn_taymiyyah", target:"icr",            label:"⚠️ ALSO manages ICR",                type:"mb"        },
+  { source:"rauf_patel",    target:"king_fahad",     label:"Director",                            type:"control"   },
+
+  // ─── FARRUKH.NET / NJ THREAD ─────────────────────────────────────────────────
+  { source:"farrukh_net",   target:"mcmc_nj",        label:"Hosted lectures here 2004–2006",      type:"event"     },
+  { source:"farrukh_net",   target:"ji",             label:"JI Pakistan media mirror (2001)",      type:"ji"        },
+  { source:"mcmc_nj",       target:"icna",           label:"ICNA-affiliated mosque",              type:"ji"        },
 ];
 
 // ─── COLOR MAPS ──────────────────────────────────────────────────────────────
@@ -446,6 +584,7 @@ const linkColor = {
   employ:    "#5b9cf6",
   gov:       "#5bf6a3",
   mb:        "#c45bf6",
+  ji:        "#ffadd2",
   suspected: "#505870",
   event:     "#ffb347",
 };
