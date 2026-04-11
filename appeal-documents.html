@@ -373,10 +373,33 @@
   }
 
   /* single-file exhibit: buttons sit in header */
+  .exhibit-card-actions {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-end;
+    align-self: stretch;
+    flex-shrink: 0;
+  }
+
   .exhibit-card-buttons {
     display: flex;
     gap: 8px;
     flex-shrink: 0;
+  }
+
+  .exhibit-chip {
+    font-family: 'Source Code Pro', monospace;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #e8c56d;
+    background: rgba(232, 197, 109, 0.1);
+    border: 1px solid rgba(232, 197, 109, 0.35);
+    border-radius: 3px;
+    padding: 2px 7px;
+    white-space: nowrap;
   }
 
   /* multi-file exhibit: sub-rows below header */
@@ -671,6 +694,15 @@
     .exhibit-file-row { padding-left: 20px; }
     .exhibit-card-header { flex-wrap: wrap; }
     .exhibit-card-buttons { width: 100%; justify-content: flex-end; }
+    .exhibit-card-actions {
+      flex-direction: row;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 10px;
+      width: 100%;
+      align-self: auto;
+    }
+    .exhibit-card-actions .exhibit-card-buttons { width: auto; }
   }
 
   @media (max-width: 600px) {
@@ -929,6 +961,16 @@ const EXHIBITS = [
     files: [
       { label: 'P-1 & P-2 — ABC 7 & Press Enterprise Coverage', path: 'Crescent Garden Cemetery Appeal Exhibits/Exhibit P Media Coverage Aug 2025 Crescent Garden Cemetery/Exhibit P-1&2 Media Coverage ABC 7 & Press Enterprise August 2025 Crescent Garden Cemetery.pdf', type: 'PDF' }
     ]
+  },
+  {
+    letter: 'Q',
+    title: '2005 Phase 1 Environmental Site Assessment — Meadowbrook / Dowling Estates (EEI Project P051108)',
+    desc: 'A 2005 Phase 1 Environmental Site Assessment of the same land now proposed for Crescent Gardens Cemetery, commissioned by the Shopoff Group for a residential development that was never built. Documents a Riverside County Board of Supervisors enforcement action (Case No. CV03-1875) for 40,000 square feet of illegal dumping — tires, vehicles, abandoned structures, and a 55-gallon drum of unknown liquid — with no documented evidence of remediation before MMCC purchased the land in 2021.',
+    directOpen: true,
+    chip: 'PDF Contains Photos',
+    files: [
+      { label: 'Phase 1 ESA — Springbrook Investments / Meadowbrook, Perris CA (December 2005)', path: 'Crescent Garden Cemetery Appeal Exhibits/Exhibit Q/lee-meadowbrook-esa.pdf', type: 'PDF' }
+    ]
   }
 ];
 
@@ -1039,12 +1081,18 @@ document.addEventListener('keydown', e => {
 
     let headerButtons = '';
     if (singleFile) {
-      headerButtons = `
+      const openBtn = ex.directOpen
+        ? `<a href="${ex.files[0].path}" target="_blank" class="btn-open">Open</a>`
+        : `<button class="btn-open" data-idx="0">Open</button>`;
+      const buttonsHtml = `
         <div class="exhibit-card-buttons">
-          <button class="btn-open" data-idx="0">Open</button>
+          ${openBtn}
           <a href="${ex.files[0].path}" download class="btn-download">Download</a>
         </div>
       `;
+      headerButtons = ex.chip
+        ? `<div class="exhibit-card-actions"><span class="exhibit-chip">${ex.chip}</span>${buttonsHtml}</div>`
+        : buttonsHtml;
     }
 
     card.innerHTML = `
@@ -1062,14 +1110,21 @@ document.addEventListener('keydown', e => {
     // single-file: open on card click or open button
     if (singleFile) {
       const f = ex.files[0];
-      card.querySelector('.btn-open').addEventListener('click', e => {
-        e.stopPropagation();
-        openModal(`Exhibit ${ex.letter} — ${f.label}`, f.path, f.type);
-      });
-      card.querySelector('.exhibit-card-header').style.cursor = 'pointer';
-      card.querySelector('.exhibit-card-header').addEventListener('click', () => {
-        openModal(`Exhibit ${ex.letter} — ${f.label}`, f.path, f.type);
-      });
+      if (!ex.directOpen) {
+        card.querySelector('.btn-open').addEventListener('click', e => {
+          e.stopPropagation();
+          openModal(`Exhibit ${ex.letter} — ${f.label}`, f.path, f.type);
+        });
+        card.querySelector('.exhibit-card-header').style.cursor = 'pointer';
+        card.querySelector('.exhibit-card-header').addEventListener('click', () => {
+          openModal(`Exhibit ${ex.letter} — ${f.label}`, f.path, f.type);
+        });
+      } else {
+        card.querySelector('.exhibit-card-header').style.cursor = 'pointer';
+        card.querySelector('.exhibit-card-header').addEventListener('click', () => {
+          window.open(f.path, '_blank');
+        });
+      }
     }
 
     // multi-file: open buttons per row
